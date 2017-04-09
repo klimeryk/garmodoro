@@ -21,7 +21,6 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 	}
 
 	function pomodoroCallback() {
-		System.println( "pomodoroCallback" );
 		minutes -= 1;
 
 		if ( Attention has :vibrate ) {
@@ -29,7 +28,6 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 		}
 
 		if ( minutes == 0 ) {
-			System.println( "End of pomodoro" );
 			ping( 100, 100 );
 			timer.stop();
 			isPomodoroTimerStarted = false;
@@ -43,7 +41,6 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 	}
 
 	function breakCallback() {
-		System.println( "breakCallback" );
 		ping( 100, 100 );
 		isBreakTimerStarted = false;
 		pomodoroNumber += 1;
@@ -69,9 +66,8 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 
 	function onSelect() {
 		if ( isBreakTimerStarted ) {
-			System.println( "You're still on a break!" );
+			return true;
 		} else if ( isPomodoroTimerStarted ) {
-			System.println( "Reseting to start" );
 			ping( 100, 100 );
 			timer.stop();
 			minutes = me.pomodoroLength;
@@ -80,7 +76,6 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 
 			Ui.requestUpdate();
 		} else {
-			System.println( "Starting pomodoro " + pomodoroNumber );
 			ping( 100, 100 );
 			minutes = me.pomodoroLength;
 			timer.start( method( :pomodoroCallback ), 60 * 1000, true );
