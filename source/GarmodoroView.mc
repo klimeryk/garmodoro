@@ -34,13 +34,15 @@ class GarmodoroView extends Ui.View {
 		} else if ( isPomodoroTimerStarted ) {
 			dc.setColor( Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT );
 			dc.drawText( ( dc.getWidth() / 2 ), ( ( dc.getHeight() / 2 ) - 90 ), Gfx.FONT_NUMBER_THAI_HOT, minutes.format( "%02d" ), Gfx.TEXT_JUSTIFY_CENTER );
+			dc.setColor( Gfx.COLOR_DK_RED, Gfx.COLOR_TRANSPARENT );
+			dc.drawText( ( dc.getWidth() / 2 ), ( ( dc.getHeight() / 2 ) + 10 ), Gfx.FONT_TINY, "minutes left", Gfx.TEXT_JUSTIFY_CENTER );
 		} else {
 			dc.setColor( Gfx.COLOR_ORANGE, Gfx.COLOR_TRANSPARENT );
 			dc.drawText( ( dc.getWidth() / 2 ), ( ( dc.getHeight() / 2 ) - 30 ), Gfx.FONT_LARGE, "Ready!", Gfx.TEXT_JUSTIFY_CENTER );
 		}
 
 		dc.setColor( Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT );
-		dc.drawText( ( dc.getWidth() / 2 ), ( ( dc.getHeight() / 2 ) + 20 ), Gfx.FONT_MEDIUM, "Pomodoro #" + pomodoroNumber, Gfx.TEXT_JUSTIFY_CENTER );
+		dc.drawText( ( dc.getWidth() / 2 ), ( ( dc.getHeight() / 2 ) + 30 ), Gfx.FONT_MEDIUM, "Pomodoro #" + pomodoroNumber, Gfx.TEXT_JUSTIFY_CENTER );
 	}
 
 	// Called when this View is removed from the screen. Save the
