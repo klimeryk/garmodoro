@@ -9,6 +9,11 @@ var isPomodoroTimerStarted = false;
 var isBreakTimerStarted = false;
 
 class GarmodoroDelegate extends Ui.BehaviorDelegate {
+	const APP = Application.getApp();
+	hidden var pomodoroLength = APP.getProperty( "pomodoroLength" );
+	hidden var shortBreakLength = APP.getProperty( "shortBreakLength" );
+	hidden var longBreakLength = APP.getProperty( "longBreakLength" );
+	hidden var numberOfPomodorosBeforeLongBreak = APP.getProperty( "numberOfPomodorosBeforeLongBreak" );
 
     function initialize() {
         System.println( "GomodoroDelegate: initialize" );
@@ -23,13 +28,13 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
             ping( 50, 50 );
         }
 
-        if ( minutes == 25 ) {
+        if ( minutes == me.pomodoroLength ) {
             System.println( "End of pomodoro" );
             ping( 100, 100 );
             timer.stop();
             isPomodoroTimerStarted = false;
 
-            var minutesOfBreak = pomodoroNumber % 4 ? 30 : 5;
+            var minutesOfBreak = pomodoroNumber % me.numberOfPomodorosBeforeLongBreak ? me.longBreakLength : me.shortBreakLength;
             timer.start( method( :breakCallback ), minutesOfBreak * 60 * 1000, true );
             isBreakTimerStarted = true;
         }

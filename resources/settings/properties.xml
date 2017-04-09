@@ -1,0 +1,6 @@
+<properties>
+	<property id="pomodoroLength" type="number">25</property>
+	<property id="shortBreakLength" type="number">5</property>
+	<property id="longBreakLength" type="number">30</property>
+	<property id="numberOfPomodorosBeforeLongBreak" type="number">4</property>
+</properties>

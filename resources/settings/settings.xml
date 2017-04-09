@@ -1,0 +1,14 @@
+<settings>
+	<setting propertyKey="@Properties.pomodoroLength" title="@Strings.PomodoroLength">
+		<settingConfig type="numeric" min="1" />
+	</setting>
+	<setting propertyKey="@Properties.shortBreakLength" title="@Strings.ShortBreakLength">
+		<settingConfig type="numeric" min="1" />
+	</setting>
+	<setting propertyKey="@Properties.longBreakLength" title="@Strings.LongBreakLength">
+		<settingConfig type="numeric" min="1" />
+	</setting>
+	<setting propertyKey="@Properties.numberOfPomodorosBeforeLongBreak" title="@Strings.NumberOfPomodorosBeforeLongBreak">
+		<settingConfig type="numeric" min="1" />
+	</setting>
+</settings>
