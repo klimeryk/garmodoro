@@ -4,4 +4,8 @@
     <string id="ShortBreakLength">The length of a short break between Pomodoros</string>
     <string id="LongBreakLength">The length of the long break after a group of Pomodoros</string>
     <string id="NumberOfPomodorosBeforeLongBreak">The number of Pomodoros in a group</string>
+
+	<string id="pomodoroSubtitle">minutes left</string>
+	<string id="breakLabel">Break!</string>
+	<string id="readyLabel">Ready!</string>
 </strings>
