@@ -68,12 +68,14 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
             System.println( "You're still on a break!" );
         } else if ( isPomodoroTimerStarted ) {
             System.println( "Reseting to start" );
+            ping( 100, 100 );
             timer.stop();
             minutes = 0;
             pomodoroNumber = 1;
             isPomodoroTimerStarted = false;
         } else {
             System.println( "Starting pomodoro " + pomodoroNumber );
+            ping( 100, 100 );
             minutes = 0;
             timer.start( method( :pomodoroCallback ), 60 * 1000, true );
             isPomodoroTimerStarted = true;
