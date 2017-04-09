@@ -1,0 +1,11 @@
+<strings>
+    <string id="AppName">Garmodoro</string>
+    <string id="PomodoroLength">Czas trwania jednego Pomodoro (w minutach)</string>
+    <string id="ShortBreakLength">Czas trwania krótkiej przerwy pomiędzy Pomodoro</string>
+    <string id="LongBreakLength">Czas trwania długiej przerwy pomiędzy grupą Pomodoro</string>
+    <string id="NumberOfPomodorosBeforeLongBreak">Liczba Pomodoro w grupie</string>
+
+	<string id="pomodoroSubtitle">minut pozostało</string>
+	<string id="breakLabel">Przerwa!</string>
+	<string id="readyLabel">Gotowy!</string>
+</strings>
