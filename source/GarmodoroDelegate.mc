@@ -22,20 +22,20 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 
 	function pomodoroCallback() {
 		System.println( "pomodoroCallback" );
-		minutes += 1;
+		minutes -= 1;
 
 		if ( Attention has :vibrate ) {
 			ping( 50, 50 );
 		}
 
-		if ( minutes == me.pomodoroLength ) {
+		if ( minutes == 0 ) {
 			System.println( "End of pomodoro" );
 			ping( 100, 100 );
 			timer.stop();
 			isPomodoroTimerStarted = false;
 
 			var minutesOfBreak = pomodoroNumber % me.numberOfPomodorosBeforeLongBreak ? me.longBreakLength : me.shortBreakLength;
-			timer.start( method( :breakCallback ), minutesOfBreak * 60 * 1000, true );
+			timer.start( method( :breakCallback ), minutesOfBreak * 60 * 1000, false );
 			isBreakTimerStarted = true;
 		}
 
@@ -44,11 +44,10 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 
 	function breakCallback() {
 		System.println( "breakCallback" );
-		timer.stop();
 		ping( 100, 100 );
 		isBreakTimerStarted = false;
 		pomodoroNumber += 1;
-		minutes = 0;
+		minutes = me.pomodoroLength;
 
 		Ui.requestUpdate();
 	}
@@ -75,7 +74,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 			System.println( "Reseting to start" );
 			ping( 100, 100 );
 			timer.stop();
-			minutes = 0;
+			minutes = me.pomodoroLength;
 			pomodoroNumber = 1;
 			isPomodoroTimerStarted = false;
 
@@ -83,7 +82,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 		} else {
 			System.println( "Starting pomodoro " + pomodoroNumber );
 			ping( 100, 100 );
-			minutes = 0;
+			minutes = me.pomodoroLength;
 			timer.start( method( :pomodoroCallback ), 60 * 1000, true );
 			isPomodoroTimerStarted = true;
 
