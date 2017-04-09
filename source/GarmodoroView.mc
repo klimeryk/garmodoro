@@ -35,7 +35,7 @@ class GarmodoroView extends Ui.View {
 			dc.setColor( Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT );
 			dc.drawText( ( dc.getWidth() / 2 ), ( ( dc.getHeight() / 2 ) - 90 ), Gfx.FONT_NUMBER_THAI_HOT, minutes.format( "%02d" ), Gfx.TEXT_JUSTIFY_CENTER );
 		} else {
-			dc.setColor( Gfx.COLOR_GREEN, Gfx.COLOR_TRANSPARENT );
+			dc.setColor( Gfx.COLOR_ORANGE, Gfx.COLOR_TRANSPARENT );
 			dc.drawText( ( dc.getWidth() / 2 ), ( ( dc.getHeight() / 2 ) - 30 ), Gfx.FONT_LARGE, "Ready!", Gfx.TEXT_JUSTIFY_CENTER );
 		}
 
