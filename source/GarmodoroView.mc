@@ -33,7 +33,7 @@ class GarmodoroView extends Ui.View {
             dc.drawText( ( dc.getWidth() / 2 ), ( ( dc.getHeight() / 2 ) - 30 ), Gfx.FONT_LARGE, "Break", Gfx.TEXT_JUSTIFY_CENTER );
         } else {
             dc.setColor( Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT );
-            dc.drawText( ( dc.getWidth() / 2 ), ( ( dc.getHeight() / 2 ) - 90 ), Gfx.FONT_NUMBER_THAI_HOT, minutes, Gfx.TEXT_JUSTIFY_CENTER );
+            dc.drawText( ( dc.getWidth() / 2 ), ( ( dc.getHeight() / 2 ) - 90 ), Gfx.FONT_NUMBER_THAI_HOT, padNumber( minutes ), Gfx.TEXT_JUSTIFY_CENTER );
         }
 
         dc.setColor( Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT );
@@ -47,4 +47,11 @@ class GarmodoroView extends Ui.View {
         System.println( "onHide" );
     }
 
+    function padNumber( number ) {
+        if ( number < 10 ) {
+            return "0" + number;
+        }
+
+        return number;
+    }
 }
