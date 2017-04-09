@@ -44,8 +44,8 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 
 	function breakCallback() {
 		System.println( "breakCallback" );
-		ping( 100, 100 );
 		timer.stop();
+		ping( 100, 100 );
 		isBreakTimerStarted = false;
 		pomodoroNumber += 1;
 		minutes = 0;
@@ -78,12 +78,16 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 			minutes = 0;
 			pomodoroNumber = 1;
 			isPomodoroTimerStarted = false;
+
+			Ui.requestUpdate();
 		} else {
 			System.println( "Starting pomodoro " + pomodoroNumber );
 			ping( 100, 100 );
 			minutes = 0;
 			timer.start( method( :pomodoroCallback ), 60 * 1000, true );
 			isPomodoroTimerStarted = true;
+
+			Ui.requestUpdate();
 		}
 		return true;
 	}
