@@ -7,6 +7,8 @@ class GarmodoroView extends Ui.View {
 	hidden var pomodoroSubtitle;
 	hidden var breakLabel;
 	hidden var readyLabel;
+	hidden var centerX;
+	hidden var centerY;
 
 	function initialize() {
 		System.println( "GomodoroView: initialize" );
@@ -20,6 +22,9 @@ class GarmodoroView extends Ui.View {
 		pomodoroSubtitle = Ui.loadResource( Rez.Strings.pomodoroSubtitle );
 		breakLabel = Ui.loadResource( Rez.Strings.breakLabel );
 		readyLabel = Ui.loadResource( Rez.Strings.readyLabel );
+
+		centerX = dc.getWidth() / 2;
+		centerY = dc.getHeight() / 2;
 	}
 
 	// Called when this View is brought to the foreground. Restore
@@ -37,19 +42,19 @@ class GarmodoroView extends Ui.View {
 		dc.clear();
 		if ( isBreakTimerStarted ) {
 			dc.setColor( Gfx.COLOR_GREEN, Gfx.COLOR_TRANSPARENT );
-			dc.drawText( ( dc.getWidth() / 2 ), ( ( dc.getHeight() / 2 ) - 30 ), Gfx.FONT_LARGE, me.breakLabel, Gfx.TEXT_JUSTIFY_CENTER );
+			dc.drawText( me.centerX, ( me.centerY - 30 ), Gfx.FONT_LARGE, me.breakLabel, Gfx.TEXT_JUSTIFY_CENTER );
 		} else if ( isPomodoroTimerStarted ) {
 			dc.setColor( Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT );
-			dc.drawText( ( dc.getWidth() / 2 ), ( ( dc.getHeight() / 2 ) - 90 ), Gfx.FONT_NUMBER_THAI_HOT, minutes.format( "%02d" ), Gfx.TEXT_JUSTIFY_CENTER );
+			dc.drawText( me.centerX, ( me.centerY - 90 ), Gfx.FONT_NUMBER_THAI_HOT, minutes.format( "%02d" ), Gfx.TEXT_JUSTIFY_CENTER );
 			dc.setColor( Gfx.COLOR_DK_RED, Gfx.COLOR_TRANSPARENT );
-			dc.drawText( ( dc.getWidth() / 2 ), ( ( dc.getHeight() / 2 ) + 10 ), Gfx.FONT_TINY, me.pomodoroSubtitle, Gfx.TEXT_JUSTIFY_CENTER );
+			dc.drawText( me.centerX, ( me.centerY + 10 ), Gfx.FONT_TINY, me.pomodoroSubtitle, Gfx.TEXT_JUSTIFY_CENTER );
 		} else {
 			dc.setColor( Gfx.COLOR_ORANGE, Gfx.COLOR_TRANSPARENT );
-			dc.drawText( ( dc.getWidth() / 2 ), ( ( dc.getHeight() / 2 ) - 30 ), Gfx.FONT_LARGE, me.readyLabel, Gfx.TEXT_JUSTIFY_CENTER );
+			dc.drawText( me.centerX, ( me.centerY - 30 ), Gfx.FONT_LARGE, me.readyLabel, Gfx.TEXT_JUSTIFY_CENTER );
 		}
 
 		dc.setColor( Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT );
-		dc.drawText( ( dc.getWidth() / 2 ), ( ( dc.getHeight() / 2 ) + 30 ), Gfx.FONT_MEDIUM, "Pomodoro #" + pomodoroNumber, Gfx.TEXT_JUSTIFY_CENTER );
+		dc.drawText( me.centerX, ( me.centerY + 30 ), Gfx.FONT_MEDIUM, "Pomodoro #" + pomodoroNumber, Gfx.TEXT_JUSTIFY_CENTER );
 	}
 
 	// Called when this View is removed from the screen. Save the
