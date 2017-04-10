@@ -12,11 +12,13 @@ class GarmodoroApp extends App.AppBase {
 	function onStart(state) {
 		System.println("onStart");
 		timer = new Timer.Timer();
+		tickTimer = new Timer.Timer();
 	}
 
 	// onStop() is called when your application is exiting
 	function onStop(state) {
 		System.println("onStop");
+		tickTimer.stop();
 		timer.stop();
 	}
 

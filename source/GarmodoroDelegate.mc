@@ -3,6 +3,7 @@ using Toybox.System as System;
 using Toybox.WatchUi as Ui;
 
 var timer;
+var tickTimer;
 var minutes = 0;
 var pomodoroNumber = 1;
 var isPomodoroTimerStarted = false;
@@ -23,12 +24,9 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 	function pomodoroCallback() {
 		minutes -= 1;
 
-		if ( Attention has :vibrate ) {
-			ping( 50, 500 );
-		}
-
 		if ( minutes == 0 ) {
-			ping( 100, 1000 );
+			ping( 100, 1500 );
+			tickTimer.stop();
 			timer.stop();
 			isPomodoroTimerStarted = false;
 
@@ -41,12 +39,16 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 	}
 
 	function breakCallback() {
-		ping( 100, 1000 );
+		ping( 100, 1500 );
 		isBreakTimerStarted = false;
 		pomodoroNumber += 1;
 		minutes = me.pomodoroLength;
 
 		Ui.requestUpdate();
+	}
+
+	function tickCallback() {
+		ping( 30, 100 );
 	}
 
 	function onBack() {
@@ -68,7 +70,8 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 		if ( isBreakTimerStarted ) {
 			return true;
 		} else if ( isPomodoroTimerStarted ) {
-			ping( 50, 1000 );
+			ping( 50, 1500 );
+			tickTimer.stop();
 			timer.stop();
 			minutes = me.pomodoroLength;
 			pomodoroNumber = 1;
@@ -76,9 +79,10 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 
 			Ui.requestUpdate();
 		} else {
-			ping( 100, 1000 );
+			ping( 75, 1500 );
 			minutes = me.pomodoroLength;
 			timer.start( method( :pomodoroCallback ), 60 * 1000, true );
+			tickTimer.start( method( :tickCallback ), 1000, true );
 			isPomodoroTimerStarted = true;
 
 			Ui.requestUpdate();
