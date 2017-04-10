@@ -50,7 +50,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 	}
 
 	function onBack() {
-		System.println( "onBack" );
+		System.exit();
 		return true;
 	}
 
