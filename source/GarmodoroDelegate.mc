@@ -84,7 +84,9 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 			ping( 75, 1500 );
 			minutes = me.pomodoroLength;
 			timer.start( method( :pomodoroCallback ), 60 * 1000, true );
-			tickTimer.start( method( :tickCallback ), 1000, true );
+			if ( me.tickStrength > 0 && me.tickDuration > 0 ) {
+				tickTimer.start( method( :tickCallback ), 1000, true );
+			}
 			isPomodoroTimerStarted = true;
 
 			Ui.requestUpdate();
