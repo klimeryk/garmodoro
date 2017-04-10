@@ -24,11 +24,11 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 		minutes -= 1;
 
 		if ( Attention has :vibrate ) {
-			ping( 50, 50 );
+			ping( 50, 500 );
 		}
 
 		if ( minutes == 0 ) {
-			ping( 100, 100 );
+			ping( 100, 1000 );
 			timer.stop();
 			isPomodoroTimerStarted = false;
 
@@ -41,7 +41,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 	}
 
 	function breakCallback() {
-		ping( 100, 100 );
+		ping( 100, 1000 );
 		isBreakTimerStarted = false;
 		pomodoroNumber += 1;
 		minutes = me.pomodoroLength;
@@ -68,7 +68,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 		if ( isBreakTimerStarted ) {
 			return true;
 		} else if ( isPomodoroTimerStarted ) {
-			ping( 100, 100 );
+			ping( 50, 1000 );
 			timer.stop();
 			minutes = me.pomodoroLength;
 			pomodoroNumber = 1;
@@ -76,7 +76,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 
 			Ui.requestUpdate();
 		} else {
-			ping( 100, 100 );
+			ping( 100, 1000 );
 			minutes = me.pomodoroLength;
 			timer.start( method( :pomodoroCallback ), 60 * 1000, true );
 			isPomodoroTimerStarted = true;
