@@ -11,4 +11,10 @@
 	<setting propertyKey="@Properties.numberOfPomodorosBeforeLongBreak" title="@Strings.NumberOfPomodorosBeforeLongBreak">
 		<settingConfig type="numeric" min="1" />
 	</setting>
+	<setting propertyKey="@Properties.tickStrength" title="@Strings.TickStrength">
+		<settingConfig type="numeric" min="0" max="100" />
+	</setting>
+	<setting propertyKey="@Properties.tickDuration" title="@Strings.TickDuration">
+		<settingConfig type="numeric" min="80" max="1000" />
+	</setting>
 </settings>

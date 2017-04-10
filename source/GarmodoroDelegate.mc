@@ -15,6 +15,8 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 	hidden var shortBreakLength = APP.getProperty( "shortBreakLength" );
 	hidden var longBreakLength = APP.getProperty( "longBreakLength" );
 	hidden var numberOfPomodorosBeforeLongBreak = APP.getProperty( "numberOfPomodorosBeforeLongBreak" );
+	hidden var tickStrength = APP.getProperty( "tickStrength" );
+	hidden var tickDuration = APP.getProperty( "tickDuration" );
 
 	function initialize() {
 		System.println( "GomodoroDelegate: initialize" );
@@ -48,7 +50,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 	}
 
 	function tickCallback() {
-		ping( 30, 100 );
+		ping( me.tickStrength, me.tickDuration );
 	}
 
 	function onBack() {

@@ -3,4 +3,6 @@
 	<property id="shortBreakLength" type="number">5</property>
 	<property id="longBreakLength" type="number">30</property>
 	<property id="numberOfPomodorosBeforeLongBreak" type="number">4</property>
+	<property id="tickStrength" type="number">60</property>
+	<property id="tickDuration" type="number">80</property>
 </properties>
