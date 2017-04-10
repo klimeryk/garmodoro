@@ -1,5 +1,5 @@
 <strings>
-    <string id="AppName">Garmodoro</string>
+    <string id="AppName">Pomodoro</string>
     <string id="PomodoroLength">Czas trwania jednego Pomodoro (w minutach)</string>
     <string id="ShortBreakLength">Czas trwania krótkiej przerwy pomiędzy Pomodoro</string>
     <string id="LongBreakLength">Czas trwania długiej przerwy pomiędzy grupą Pomodoro</string>
