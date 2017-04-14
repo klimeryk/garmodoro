@@ -11,4 +11,7 @@
 	<string id="ShortBreakLabel">Krótka przerwa!</string>
 	<string id="LongBreakLabel">Długa przerwa!</string>
 	<string id="ReadyLabel">Gotowy!</string>
+
+	<string id="RestartMenuLabel">Restart</string>
+	<string id="ExitMenuLabel">Zakończ</string>
 </strings>
