@@ -1,0 +1,4 @@
+<menu id="StopMenu">
+	<menu-item id="restart">Restart</menu-item>
+	<menu-item id="exit">Exit</menu-item>
+</menu>

@@ -9,6 +9,12 @@ var pomodoroNumber = 1;
 var isPomodoroTimerStarted = false;
 var isBreakTimerStarted = false;
 
+function ping( dutyCycle, length ) {
+	if ( Attention has :vibrate ) {
+		Attention.vibrate( [ new Attention.VibeProfile( dutyCycle, length ) ] );
+	}
+}
+
 class GarmodoroDelegate extends Ui.BehaviorDelegate {
 	const APP = Application.getApp();
 	hidden var pomodoroLength = APP.getProperty( "pomodoroLength" );
@@ -55,49 +61,34 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 	}
 
 	function onBack() {
-		System.exit();
 		return true;
 	}
 
 	function onNextMode() {
-		System.println( "onNextMode" );
 		return true;
 	}
 
 	function onNextPage() {
-		System.println( "onNextPage" );
 		return true;
 	}
 
 	function onSelect() {
-		if ( isBreakTimerStarted ) {
+		if ( isBreakTimerStarted || isPomodoroTimerStarted ) {
+			Ui.pushView( new Rez.Menus.StopMenu(), new StopMenuDelegate(), Ui.SLIDE_UP );
 			return true;
-		} else if ( isPomodoroTimerStarted ) {
-			ping( 50, 1500 );
-			tickTimer.stop();
-			timer.stop();
-			minutes = me.pomodoroLength;
-			pomodoroNumber = 1;
-			isPomodoroTimerStarted = false;
-
-			Ui.requestUpdate();
-		} else {
-			ping( 75, 1500 );
-			minutes = me.pomodoroLength;
-			timer.start( method( :pomodoroCallback ), 60 * 1000, true );
-			if ( me.tickStrength > 0 && me.tickDuration > 0 ) {
-				tickTimer.start( method( :tickCallback ), 1000, true );
-			}
-			isPomodoroTimerStarted = true;
-
-			Ui.requestUpdate();
 		}
+
+		ping( 75, 1500 );
+		minutes = me.pomodoroLength;
+		timer.start( method( :pomodoroCallback ), 60 * 1000, true );
+		if ( me.tickStrength > 0 && me.tickDuration > 0 ) {
+			tickTimer.start( method( :tickCallback ), 1000, true );
+		}
+		isPomodoroTimerStarted = true;
+
+		Ui.requestUpdate();
+
 		return true;
 	}
 
-	function ping( dutyCycle, length ) {
-		if ( Attention has :vibrate ) {
-			Attention.vibrate( [ new Attention.VibeProfile( dutyCycle, length ) ] );
-		}
-	}
 }
