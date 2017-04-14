@@ -32,7 +32,8 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 			timer.stop();
 			isPomodoroTimerStarted = false;
 
-			var minutesOfBreak = ( pomodoroNumber % me.numberOfPomodorosBeforeLongBreak ) == 0 ? me.longBreakLength : me.shortBreakLength;
+			var isLongBreak = ( pomodoroNumber % me.numberOfPomodorosBeforeLongBreak ) == 0;
+			var minutesOfBreak = isLongBreak ? me.longBreakLength : me.shortBreakLength;
 			timer.start( method( :breakCallback ), minutesOfBreak * 60 * 1000, false );
 			isBreakTimerStarted = true;
 		}

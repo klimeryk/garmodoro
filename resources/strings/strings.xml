@@ -7,7 +7,8 @@
 	<string id="TickStrength">Strength of the vibration on every tick</string>
 	<string id="TickDuration">Duration of the vibration on every tick</string>
 
-	<string id="pomodoroSubtitle">minutes left</string>
-	<string id="breakLabel">Break!</string>
-	<string id="readyLabel">Ready!</string>
+	<string id="PomodoroSubtitle">minutes left</string>
+	<string id="ShortBreakLabel">Break!</string>
+	<string id="LongBreakLabel">Break!</string>
+	<string id="ReadyLabel">Ready!</string>
 </strings>

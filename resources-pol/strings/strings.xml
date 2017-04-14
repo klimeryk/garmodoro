@@ -7,7 +7,8 @@
 	<string id="TickStrength">Siła wibracji co tyknięcie</string>
 	<string id="TickDuration">Długość wibracji co tyknięcie</string>
 
-	<string id="pomodoroSubtitle">minut pozostało</string>
-	<string id="breakLabel">Przerwa!</string>
-	<string id="readyLabel">Gotowy!</string>
+	<string id="PomodoroSubtitle">minut pozostało</string>
+	<string id="ShortBreakLabel">Krótka przerwa!</string>
+	<string id="LongBreakLabel">Długa przerwa!</string>
+	<string id="ReadyLabel">Gotowy!</string>
 </strings>

@@ -4,8 +4,11 @@ using Toybox.System as System;
 using Toybox.Timer as Timer;
 
 class GarmodoroView extends Ui.View {
+	const APP = Application.getApp();
+	hidden var numberOfPomodorosBeforeLongBreak = APP.getProperty( "numberOfPomodorosBeforeLongBreak" );
 	hidden var pomodoroSubtitle;
-	hidden var breakLabel;
+	hidden var shortBreakLabel;
+	hidden var longBreakLabel;
 	hidden var readyLabel;
 	hidden var centerX;
 	hidden var centerY;
@@ -19,9 +22,10 @@ class GarmodoroView extends Ui.View {
 	function onLayout(dc) {
 		System.println( "onLayout" );
 
-		pomodoroSubtitle = Ui.loadResource( Rez.Strings.pomodoroSubtitle );
-		breakLabel = Ui.loadResource( Rez.Strings.breakLabel );
-		readyLabel = Ui.loadResource( Rez.Strings.readyLabel );
+		pomodoroSubtitle = Ui.loadResource( Rez.Strings.PomodoroSubtitle );
+		shortBreakLabel = Ui.loadResource( Rez.Strings.ShortBreakLabel );
+		longBreakLabel = Ui.loadResource( Rez.Strings.LongBreakLabel );
+		readyLabel = Ui.loadResource( Rez.Strings.ReadyLabel );
 
 		centerX = dc.getWidth() / 2;
 		centerY = dc.getHeight() / 2;
@@ -42,7 +46,8 @@ class GarmodoroView extends Ui.View {
 		dc.clear();
 		if ( isBreakTimerStarted ) {
 			dc.setColor( Gfx.COLOR_GREEN, Gfx.COLOR_TRANSPARENT );
-			dc.drawText( me.centerX, ( me.centerY - 30 ), Gfx.FONT_LARGE, me.breakLabel, Gfx.TEXT_JUSTIFY_CENTER );
+			var isLongBreak = ( pomodoroNumber % me.numberOfPomodorosBeforeLongBreak ) == 0;
+			dc.drawText( me.centerX, ( me.centerY - 30 ), Gfx.FONT_LARGE, isLongBreak ? me.longBreakLabel : me.shortBreakLabel, Gfx.TEXT_JUSTIFY_CENTER );
 		} else if ( isPomodoroTimerStarted ) {
 			dc.setColor( Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT );
 			dc.drawText( me.centerX, ( me.centerY - 90 ), Gfx.FONT_NUMBER_THAI_HOT, minutes.format( "%02d" ), Gfx.TEXT_JUSTIFY_CENTER );
