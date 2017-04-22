@@ -8,7 +8,6 @@ class GarmodoroView extends Ui.View {
 	hidden var longBreakLabel;
 	hidden var readyLabel;
 
-	hidden var height;
 	hidden var centerX;
 	hidden var centerY;
 
@@ -28,14 +27,14 @@ class GarmodoroView extends Ui.View {
 		longBreakLabel = Ui.loadResource( Rez.Strings.LongBreakLabel );
 		readyLabel = Ui.loadResource( Rez.Strings.ReadyLabel );
 
-		height = dc.getHeight();
+		var height = dc.getHeight();
 		centerX = dc.getWidth() / 2;
-		centerY = me.height / 2;
+		centerY = height / 2;
 		var mediumOffset = Gfx.getFontHeight( Gfx.FONT_MEDIUM );
 		var mediumOffsetHalf = mediumOffset / 2;
 		var screenShape = System.getDeviceSettings().screenShape;
 
-		me.pomodoroOffset = me.height - 5 - mediumOffset;
+		me.pomodoroOffset = height - 5 - mediumOffset;
 		if ( System.SCREEN_SHAPE_ROUND == screenShape ) {
 			me.pomodoroOffset -= mediumOffsetHalf;
 		}
