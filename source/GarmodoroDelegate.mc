@@ -31,7 +31,6 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 	hidden var tickStrength = APP.getProperty( "tickStrength" );
 	hidden var tickDuration = APP.getProperty( "tickDuration" );
 
-
 	function initialize() {
 		Ui.BehaviorDelegate.initialize();
 	}
