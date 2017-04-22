@@ -1,7 +1,7 @@
-using Toybox.Application as Application;
+using Toybox.Application as App;
 using Toybox.Timer as Timer;
 
-class GarmodoroApp extends Application.AppBase {
+class GarmodoroApp extends App.AppBase {
 
 	function initialize() {
 		AppBase.initialize();

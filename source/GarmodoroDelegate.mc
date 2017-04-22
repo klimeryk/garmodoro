@@ -1,4 +1,4 @@
-using Toybox.Application as Application;
+using Toybox.Application as App;
 using Toybox.Attention as Attention;
 using Toybox.WatchUi as Ui;
 
@@ -23,7 +23,7 @@ function play( tone ) {
 }
 
 function isLongBreak() {
-	return ( pomodoroNumber % Application.getApp().getProperty( "numberOfPomodorosBeforeLongBreak" ) ) == 0;
+	return ( pomodoroNumber % App.getApp().getProperty( "numberOfPomodorosBeforeLongBreak" ) ) == 0;
 }
 
 class GarmodoroDelegate extends Ui.BehaviorDelegate {
@@ -40,7 +40,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 			tickTimer.stop();
 			timer.stop();
 			isPomodoroTimerStarted = false;
-			minutesOfBreakLeft = Application.getApp().getProperty( isLongBreak() ? "longBreakLength" : "shortBreakLength" );
+			minutesOfBreakLeft = App.getApp().getProperty( isLongBreak() ? "longBreakLength" : "shortBreakLength" );
 
 			timer.start( method( :breakCallback ), 60 * 1000, true );
 			isBreakTimerStarted = true;
@@ -66,11 +66,11 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 	}
 
 	function shouldTick() {
-		return Application.getApp().getProperty( "tickStrength" ) > 0 && Application.getApp().getProperty( "tickDuration" ) > 0;
+		return App.getApp().getProperty( "tickStrength" ) > 0 && App.getApp().getProperty( "tickDuration" ) > 0;
 	}
 
 	function tickCallback() {
-		ping( Application.getApp().getProperty( "tickStrength" ), Application.getApp().getProperty( "tickDuration" ) );
+		ping( App.getApp().getProperty( "tickStrength" ), App.getApp().getProperty( "tickDuration" ) );
 	}
 
 	function onBack() {
@@ -106,6 +106,6 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 	}
 
 	function resetMinutes() {
-		minutes = Application.getApp().getProperty( "pomodoroLength" );
+		minutes = App.getApp().getProperty( "pomodoroLength" );
 	}
 }
