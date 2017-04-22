@@ -15,6 +15,12 @@ function ping( dutyCycle, length ) {
 	}
 }
 
+function play( tone ) {
+	if ( Attention has :playTone ) {
+		Attention.playTone( tone );
+	}
+}
+
 class GarmodoroDelegate extends Ui.BehaviorDelegate {
 	const APP = Application.getApp();
 	hidden var pomodoroLength = APP.getProperty( "pomodoroLength" );
@@ -33,6 +39,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 		minutes -= 1;
 
 		if ( minutes == 0 ) {
+			play( Attention.TONE_LAP );
 			ping( 100, 1500 );
 			tickTimer.stop();
 			timer.stop();
@@ -48,6 +55,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 	}
 
 	function breakCallback() {
+		play( Attention.TONE_INTERVAL_ALERT );
 		ping( 100, 1500 );
 		isBreakTimerStarted = false;
 		pomodoroNumber += 1;
@@ -78,6 +86,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 			return true;
 		}
 
+		play( Attention.TONE_START );
 		ping( 75, 1500 );
 		minutes = me.pomodoroLength;
 		timer.start( method( :pomodoroCallback ), 60 * 1000, true );

@@ -1,3 +1,4 @@
+using Toybox.Attention as Attention;
 using Toybox.WatchUi as Ui;
 
 class StopMenuDelegate extends Ui.MenuInputDelegate {
@@ -6,6 +7,7 @@ class StopMenuDelegate extends Ui.MenuInputDelegate {
 
 	function onMenuItem( item ) {
 		if ( item == :restart ) {
+			play( Attention.TONE_RESET );
 			ping( 50, 1500 );
 
 			tickTimer.stop();
