@@ -5,7 +5,6 @@ using Toybox.WatchUi as Ui;
 var timer;
 var tickTimer;
 var minutes = 0;
-var minutesOfBreakLeft = 0;
 var pomodoroNumber = 1;
 var isPomodoroTimerStarted = false;
 var isBreakTimerStarted = false;
@@ -44,7 +43,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 			tickTimer.stop();
 			timer.stop();
 			isPomodoroTimerStarted = false;
-			minutesOfBreakLeft = App.getApp().getProperty( isLongBreak() ? "longBreakLength" : "shortBreakLength" );
+			minutes = App.getApp().getProperty( isLongBreak() ? "longBreakLength" : "shortBreakLength" );
 
 			timer.start( method( :breakCallback ), 60 * 1000, true );
 			isBreakTimerStarted = true;
@@ -54,9 +53,9 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 	}
 
 	function breakCallback() {
-		minutesOfBreakLeft -= 1;
+		minutes -= 1;
 
-		if ( minutesOfBreakLeft == 0 ) {
+		if ( minutes == 0 ) {
 			play( Attention.TONE_INTERVAL_ALERT );
 			ping( 100, 1500 );
 			timer.stop();

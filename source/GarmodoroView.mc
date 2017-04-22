@@ -35,7 +35,7 @@ class GarmodoroView extends Ui.View {
 			dc.drawText( me.centerX, ( me.centerY - 80 ), Gfx.FONT_MEDIUM, isLongBreak() ? me.longBreakLabel : me.shortBreakLabel, Gfx.TEXT_JUSTIFY_CENTER );
 
 			dc.setColor( Gfx.COLOR_GREEN, Gfx.COLOR_TRANSPARENT );
-			dc.drawText( me.centerX, ( me.centerY - 70 ), Gfx.FONT_NUMBER_THAI_HOT, minutesOfBreakLeft.format( "%02d" ), Gfx.TEXT_JUSTIFY_CENTER );
+			dc.drawText( me.centerX, ( me.centerY - 70 ), Gfx.FONT_NUMBER_THAI_HOT, minutes.format( "%02d" ), Gfx.TEXT_JUSTIFY_CENTER );
 
 			dc.setColor( Gfx.COLOR_DK_GREEN, Gfx.COLOR_TRANSPARENT );
 			dc.drawText( me.centerX, ( me.centerY + 30 ), Gfx.FONT_TINY, me.pomodoroSubtitle, Gfx.TEXT_JUSTIFY_CENTER );
