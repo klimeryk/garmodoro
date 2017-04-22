@@ -29,8 +29,6 @@ function isLongBreak() {
 class GarmodoroDelegate extends Ui.BehaviorDelegate {
 	const APP = Application.getApp();
 	hidden var pomodoroLength = APP.getProperty( "pomodoroLength" );
-	hidden var shortBreakLength = APP.getProperty( "shortBreakLength" );
-	hidden var longBreakLength = APP.getProperty( "longBreakLength" );
 	hidden var tickStrength = APP.getProperty( "tickStrength" );
 	hidden var tickDuration = APP.getProperty( "tickDuration" );
 
@@ -47,8 +45,8 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 			tickTimer.stop();
 			timer.stop();
 			isPomodoroTimerStarted = false;
+			minutesOfBreakLeft = Application.getApp().getProperty( isLongBreak() ? "longBreakLength" : "shortBreakLength" );
 
-			minutesOfBreakLeft = isLongBreak() ? me.longBreakLength : me.shortBreakLength;
 			timer.start( method( :breakCallback ), 60 * 1000, true );
 			isBreakTimerStarted = true;
 		}
