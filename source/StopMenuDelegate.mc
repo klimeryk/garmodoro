@@ -9,7 +9,7 @@ class StopMenuDelegate extends Ui.MenuInputDelegate {
 
 	function onMenuItem( item ) {
 		if ( item == :restart ) {
-			play( Attention.TONE_RESET );
+			play( 9 ); // Attention.TONE_RESET
 			ping( 50, 1500 );
 
 			tickTimer.stop();

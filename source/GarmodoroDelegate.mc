@@ -38,7 +38,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 		minutes -= 1;
 
 		if ( minutes == 0 ) {
-			play( Attention.TONE_LAP );
+			play( 10 ); // Attention.TONE_LAP
 			ping( 100, 1500 );
 			tickTimer.stop();
 			timer.stop();
@@ -56,7 +56,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 		minutes -= 1;
 
 		if ( minutes == 0 ) {
-			play( Attention.TONE_INTERVAL_ALERT );
+			play( 7 ); // Attention.TONE_INTERVAL_ALERT
 			ping( 100, 1500 );
 			timer.stop();
 
@@ -94,7 +94,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 			return true;
 		}
 
-		play( Attention.TONE_START );
+		play( 1 ); // Attention.TONE_START
 		ping( 75, 1500 );
 		resetMinutes();
 		timer.start( method( :pomodoroCallback ), 60 * 1000, true );
