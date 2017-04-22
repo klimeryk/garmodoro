@@ -26,6 +26,10 @@ function isLongBreak() {
 	return ( pomodoroNumber % App.getApp().getProperty( "numberOfPomodorosBeforeLongBreak" ) ) == 0;
 }
 
+function resetMinutes() {
+	minutes = App.getApp().getProperty( "pomodoroLength" );
+}
+
 class GarmodoroDelegate extends Ui.BehaviorDelegate {
 	function initialize() {
 		Ui.BehaviorDelegate.initialize();
@@ -59,7 +63,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 
 			isBreakTimerStarted = false;
 			pomodoroNumber += 1;
-			me.resetMinutes();
+			resetMinutes();
 		}
 
 		Ui.requestUpdate();
@@ -93,7 +97,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 
 		play( Attention.TONE_START );
 		ping( 75, 1500 );
-		me.resetMinutes();
+		resetMinutes();
 		timer.start( method( :pomodoroCallback ), 60 * 1000, true );
 		if ( me.shouldTick() ) {
 			tickTimer.start( method( :tickCallback ), 1000, true );
@@ -103,9 +107,5 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 		Ui.requestUpdate();
 
 		return true;
-	}
-
-	function resetMinutes() {
-		minutes = App.getApp().getProperty( "pomodoroLength" );
 	}
 }

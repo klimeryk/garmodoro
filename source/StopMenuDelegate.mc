@@ -1,12 +1,8 @@
-using Toybox.Application as Application;
 using Toybox.Attention as Attention;
 using Toybox.System as System;
 using Toybox.WatchUi as Ui;
 
 class StopMenuDelegate extends Ui.MenuInputDelegate {
-	const APP = Application.getApp();
-	hidden var pomodoroLength = APP.getProperty( "pomodoroLength" );
-
 	function initialize() {
 		MenuInputDelegate.initialize();
 	}
@@ -19,7 +15,7 @@ class StopMenuDelegate extends Ui.MenuInputDelegate {
 			tickTimer.stop();
 			timer.stop();
 
-			minutes = me.pomodoroLength;
+			resetMinutes();
 			pomodoroNumber = 1;
 			isPomodoroTimerStarted = false;
 			isBreakTimerStarted = false;
