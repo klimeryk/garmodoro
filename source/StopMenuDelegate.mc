@@ -7,6 +7,10 @@ class StopMenuDelegate extends Ui.MenuInputDelegate {
 	const APP = Application.getApp();
 	hidden var pomodoroLength = APP.getProperty( "pomodoroLength" );
 
+	function initialize() {
+		MenuInputDelegate.initialize();
+	}
+
 	function onMenuItem( item ) {
 		if ( item == :restart ) {
 			play( Attention.TONE_RESET );
