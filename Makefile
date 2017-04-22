@@ -37,3 +37,6 @@ package:
 	-y $(PRIVATE_KEY)
 	-p $(SDK_HOME)/bin/projectInfo.xml $(sources) -e -r
 
+clean:
+	@rm -rf bin/*
+
