@@ -75,11 +75,11 @@ class GarmodoroView extends Ui.View {
 	}
 
 	hidden function drawSubtitle( dc ) {
+		var offsetY = me.height - 5 - me.mediumOffset - me.tinyOffset;
 		if ( System.SCREEN_SHAPE_ROUND == me.screenShape ) {
-			dc.drawText( me.centerX, me.height - 5 - mediumOffset - ( mediumOffset / 2 ) - tinyOffset, Gfx.FONT_TINY, me.pomodoroSubtitle, Gfx.TEXT_JUSTIFY_CENTER );
-		} else {
-			dc.drawText( me.centerX, me.height - 5 - mediumOffset - tinyOffset, Gfx.FONT_TINY, me.pomodoroSubtitle, Gfx.TEXT_JUSTIFY_CENTER );
+			offsetY -= me.mediumOffset / 2;
 		}
+		dc.drawText( me.centerX, offsetY, Gfx.FONT_TINY, me.pomodoroSubtitle, Gfx.TEXT_JUSTIFY_CENTER );
 	}
 
 	function onHide() {
