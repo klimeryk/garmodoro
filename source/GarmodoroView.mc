@@ -14,8 +14,10 @@ class GarmodoroView extends Ui.View {
 	hidden var thaiHotOffset;
 	hidden var largeOffset;
 	hidden var mediumOffset;
-	hidden var tinyOffset;
 	hidden var screenShape;
+
+	hidden var pomodoroOffset;
+	hidden var captionOffset;
 
 	function initialize() {
 		View.initialize();
@@ -33,8 +35,13 @@ class GarmodoroView extends Ui.View {
 		thaiHotOffset = Gfx.getFontHeight( Gfx.FONT_NUMBER_THAI_HOT ) / 2;
 		largeOffset = Gfx.getFontHeight( Gfx.FONT_LARGE );
 		mediumOffset = Gfx.getFontHeight( Gfx.FONT_MEDIUM );
-		tinyOffset = Gfx.getFontHeight( Gfx.FONT_TINY );
 		screenShape = System.getDeviceSettings().screenShape;
+
+		me.pomodoroOffset = me.height - 5 - me.mediumOffset;
+		if ( System.SCREEN_SHAPE_ROUND == screenShape ) {
+			me.pomodoroOffset -= me.mediumOffset / 2;
+		}
+		me.captionOffset = me.pomodoroOffset - Gfx.getFontHeight( Gfx.FONT_TINY );	
 	}
 
 	function onShow() {
@@ -55,31 +62,23 @@ class GarmodoroView extends Ui.View {
 			dc.drawText( me.centerX, me.centerY - me.thaiHotOffset, Gfx.FONT_NUMBER_THAI_HOT, minutes.format( "%02d" ), Gfx.TEXT_JUSTIFY_CENTER );
 
 			dc.setColor( Gfx.COLOR_DK_GREEN, Gfx.COLOR_TRANSPARENT );
-			drawSubtitle( dc );
+			me.drawCaption( dc );
 		} else if ( isPomodoroTimerStarted ) {
 			dc.setColor( Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT );
 			dc.drawText( me.centerX, me.centerY - me.thaiHotOffset, Gfx.FONT_NUMBER_THAI_HOT, minutes.format( "%02d" ), Gfx.TEXT_JUSTIFY_CENTER );
 			dc.setColor( Gfx.COLOR_DK_RED, Gfx.COLOR_TRANSPARENT );
-			drawSubtitle( dc );
+			me.drawCaption( dc );
 		} else {
 			dc.setColor( Gfx.COLOR_ORANGE, Gfx.COLOR_TRANSPARENT );
 			dc.drawText( me.centerX, me.centerY - ( largeOffset / 2 ), Gfx.FONT_LARGE, me.readyLabel, Gfx.TEXT_JUSTIFY_CENTER );
 		}
 
 		dc.setColor( Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT );
-		if ( System.SCREEN_SHAPE_ROUND == me.screenShape ) {
-			dc.drawText( me.centerX, me.height - 5 - mediumOffset - ( mediumOffset / 2 ), Gfx.FONT_MEDIUM, "Pomodoro #" + pomodoroNumber, Gfx.TEXT_JUSTIFY_CENTER );
-		} else {
-			dc.drawText( me.centerX, me.height - 5 - mediumOffset, Gfx.FONT_MEDIUM, "Pomodoro #" + pomodoroNumber, Gfx.TEXT_JUSTIFY_CENTER );
-		}
+		dc.drawText( me.centerX, me.pomodoroOffset, Gfx.FONT_MEDIUM, "Pomodoro #" + pomodoroNumber, Gfx.TEXT_JUSTIFY_CENTER );
 	}
 
-	hidden function drawSubtitle( dc ) {
-		var offsetY = me.height - 5 - me.mediumOffset - me.tinyOffset;
-		if ( System.SCREEN_SHAPE_ROUND == me.screenShape ) {
-			offsetY -= me.mediumOffset / 2;
-		}
-		dc.drawText( me.centerX, offsetY, Gfx.FONT_TINY, me.pomodoroSubtitle, Gfx.TEXT_JUSTIFY_CENTER );
+	hidden function drawCaption( dc ) {
+		dc.drawText( me.centerX, me.captionOffset, Gfx.FONT_TINY, me.pomodoroSubtitle, Gfx.TEXT_JUSTIFY_CENTER );
 	}
 
 	function onHide() {
