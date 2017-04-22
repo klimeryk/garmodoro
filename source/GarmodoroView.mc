@@ -1,11 +1,7 @@
-using Toybox.Application as Application;
 using Toybox.WatchUi as Ui;
 using Toybox.Graphics as Gfx;
 
 class GarmodoroView extends Ui.View {
-	const APP = Application.getApp();
-	hidden var numberOfPomodorosBeforeLongBreak = APP.getProperty( "numberOfPomodorosBeforeLongBreak" );
-
 	hidden var pomodoroSubtitle;
 	hidden var shortBreakLabel;
 	hidden var longBreakLabel;
@@ -36,8 +32,7 @@ class GarmodoroView extends Ui.View {
 		dc.clear();
 		if ( isBreakTimerStarted ) {
 			dc.setColor( Gfx.COLOR_DK_GREEN, Gfx.COLOR_TRANSPARENT );
-			var isLongBreak = ( pomodoroNumber % me.numberOfPomodorosBeforeLongBreak ) == 0;
-			dc.drawText( me.centerX, ( me.centerY - 80 ), Gfx.FONT_MEDIUM, isLongBreak ? me.longBreakLabel : me.shortBreakLabel, Gfx.TEXT_JUSTIFY_CENTER );
+			dc.drawText( me.centerX, ( me.centerY - 80 ), Gfx.FONT_MEDIUM, isLongBreak() ? me.longBreakLabel : me.shortBreakLabel, Gfx.TEXT_JUSTIFY_CENTER );
 
 			dc.setColor( Gfx.COLOR_GREEN, Gfx.COLOR_TRANSPARENT );
 			dc.drawText( me.centerX, ( me.centerY - 70 ), Gfx.FONT_NUMBER_THAI_HOT, minutesOfBreakLeft.format( "%02d" ), Gfx.TEXT_JUSTIFY_CENTER );
