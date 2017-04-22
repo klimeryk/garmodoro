@@ -27,11 +27,6 @@ function isLongBreak() {
 }
 
 class GarmodoroDelegate extends Ui.BehaviorDelegate {
-	const APP = Application.getApp();
-	hidden var pomodoroLength = APP.getProperty( "pomodoroLength" );
-	hidden var tickStrength = APP.getProperty( "tickStrength" );
-	hidden var tickDuration = APP.getProperty( "tickDuration" );
-
 	function initialize() {
 		Ui.BehaviorDelegate.initialize();
 	}
@@ -64,14 +59,18 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 
 			isBreakTimerStarted = false;
 			pomodoroNumber += 1;
-			minutes = me.pomodoroLength;
+			me.resetMinutes();
 		}
 
 		Ui.requestUpdate();
 	}
 
+	function shouldTick() {
+		return Application.getApp().getProperty( "tickStrength" ) > 0 && Application.getApp().getProperty( "tickDuration" ) > 0;
+	}
+
 	function tickCallback() {
-		ping( me.tickStrength, me.tickDuration );
+		ping( Application.getApp().getProperty( "tickStrength" ), Application.getApp().getProperty( "tickDuration" ) );
 	}
 
 	function onBack() {
@@ -94,9 +93,9 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 
 		play( Attention.TONE_START );
 		ping( 75, 1500 );
-		minutes = me.pomodoroLength;
+		me.resetMinutes();
 		timer.start( method( :pomodoroCallback ), 60 * 1000, true );
-		if ( me.tickStrength > 0 && me.tickDuration > 0 ) {
+		if ( me.shouldTick() ) {
 			tickTimer.start( method( :tickCallback ), 1000, true );
 		}
 		isPomodoroTimerStarted = true;
@@ -106,4 +105,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 		return true;
 	}
 
+	function resetMinutes() {
+		minutes = Application.getApp().getProperty( "pomodoroLength" );
+	}
 }
