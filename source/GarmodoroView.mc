@@ -11,12 +11,12 @@ class GarmodoroView extends Ui.View {
 	hidden var height;
 	hidden var centerX;
 	hidden var centerY;
-	hidden var thaiHotOffset;
 
 	hidden var pomodoroOffset;
 	hidden var captionOffset;
 	hidden var breakLabelOffset;
 	hidden var readyLabelOffset;
+	hidden var minutesOffset;
 
 	function initialize() {
 		View.initialize();
@@ -31,8 +31,6 @@ class GarmodoroView extends Ui.View {
 		height = dc.getHeight();
 		centerX = dc.getWidth() / 2;
 		centerY = me.height / 2;
-		thaiHotOffset = Gfx.getFontHeight( Gfx.FONT_NUMBER_THAI_HOT ) / 2;
-		var largeOffset = Gfx.getFontHeight( Gfx.FONT_LARGE );
 		var mediumOffset = Gfx.getFontHeight( Gfx.FONT_MEDIUM );
 		var mediumOffsetHalf = mediumOffset / 2;
 		var screenShape = System.getDeviceSettings().screenShape;
@@ -48,7 +46,8 @@ class GarmodoroView extends Ui.View {
 			me.breakLabelOffset += mediumOffsetHalf;
 		}
 
-		me.readyLabelOffset = me.centerY - ( largeOffset / 2 );
+		me.readyLabelOffset = me.centerY - ( Gfx.getFontHeight( Gfx.FONT_LARGE ) / 2 );
+		me.minutesOffset = me.centerY - ( Gfx.getFontHeight( Gfx.FONT_NUMBER_THAI_HOT ) / 2 );
 	}
 
 	function onShow() {
@@ -62,13 +61,13 @@ class GarmodoroView extends Ui.View {
 			dc.drawText( me.centerX, me.breakLabelOffset, Gfx.FONT_MEDIUM, isLongBreak() ? me.longBreakLabel : me.shortBreakLabel, Gfx.TEXT_JUSTIFY_CENTER );
 
 			dc.setColor( Gfx.COLOR_GREEN, Gfx.COLOR_TRANSPARENT );
-			dc.drawText( me.centerX, me.centerY - me.thaiHotOffset, Gfx.FONT_NUMBER_THAI_HOT, minutes.format( "%02d" ), Gfx.TEXT_JUSTIFY_CENTER );
+			me.drawMinutes( dc );
 
 			dc.setColor( Gfx.COLOR_DK_GREEN, Gfx.COLOR_TRANSPARENT );
 			me.drawCaption( dc );
 		} else if ( isPomodoroTimerStarted ) {
 			dc.setColor( Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT );
-			dc.drawText( me.centerX, me.centerY - me.thaiHotOffset, Gfx.FONT_NUMBER_THAI_HOT, minutes.format( "%02d" ), Gfx.TEXT_JUSTIFY_CENTER );
+			me.drawMinutes( dc );
 			dc.setColor( Gfx.COLOR_DK_RED, Gfx.COLOR_TRANSPARENT );
 			me.drawCaption( dc );
 		} else {
@@ -78,6 +77,10 @@ class GarmodoroView extends Ui.View {
 
 		dc.setColor( Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT );
 		dc.drawText( me.centerX, me.pomodoroOffset, Gfx.FONT_MEDIUM, "Pomodoro #" + pomodoroNumber, Gfx.TEXT_JUSTIFY_CENTER );
+	}
+
+	hidden function drawMinutes( dc ) {
+		dc.drawText( me.centerX, me.minutesOffset, Gfx.FONT_NUMBER_THAI_HOT, minutes.format( "%02d" ), Gfx.TEXT_JUSTIFY_CENTER );
 	}
 
 	hidden function drawCaption( dc ) {
