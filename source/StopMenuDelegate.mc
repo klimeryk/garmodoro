@@ -16,6 +16,7 @@ class StopMenuDelegate extends Ui.MenuInputDelegate {
 			minutes = me.pomodoroLength;
 			pomodoroNumber = 1;
 			isPomodoroTimerStarted = false;
+			isBreakTimerStarted = false;
 
 			Ui.requestUpdate();
 		} else if ( item == :exit ) {
