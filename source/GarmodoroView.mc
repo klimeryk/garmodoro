@@ -18,7 +18,7 @@ class GarmodoroView extends Ui.View {
 		View.initialize();
 	}
 
-	function onLayout(dc) {
+	function onLayout( dc ) {
 		pomodoroSubtitle = Ui.loadResource( Rez.Strings.PomodoroSubtitle );
 		shortBreakLabel = Ui.loadResource( Rez.Strings.ShortBreakLabel );
 		longBreakLabel = Ui.loadResource( Rez.Strings.LongBreakLabel );
