@@ -8,8 +8,8 @@
 	<string id="TickDuration">Duration of the vibration on every tick</string>
 
 	<string id="PomodoroSubtitle">minutes left</string>
-	<string id="ShortBreakLabel">Break!</string>
-	<string id="LongBreakLabel">Break!</string>
+	<string id="ShortBreakLabel">Short break!</string>
+	<string id="LongBreakLabel">Long break!</string>
 	<string id="ReadyLabel">Ready!</string>
 
 	<string id="RestartMenuLabel">Restart</string>
