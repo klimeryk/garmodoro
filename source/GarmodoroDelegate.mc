@@ -1,5 +1,5 @@
+using Toybox.Application as Application;
 using Toybox.Attention as Attention;
-using Toybox.System as System;
 using Toybox.WatchUi as Ui;
 
 var timer;
@@ -33,7 +33,6 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 
 
 	function initialize() {
-		System.println( "GomodoroDelegate: initialize" );
 		Ui.BehaviorDelegate.initialize();
 	}
 

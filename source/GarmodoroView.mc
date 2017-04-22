@@ -1,7 +1,6 @@
+using Toybox.Application as Application;
 using Toybox.WatchUi as Ui;
 using Toybox.Graphics as Gfx;
-using Toybox.System as System;
-using Toybox.Timer as Timer;
 
 class GarmodoroView extends Ui.View {
 	const APP = Application.getApp();
@@ -16,14 +15,10 @@ class GarmodoroView extends Ui.View {
 	hidden var centerY;
 
 	function initialize() {
-		System.println( "GomodoroView: initialize" );
 		View.initialize();
 	}
 
-	// Load your resources here
 	function onLayout(dc) {
-		System.println( "onLayout" );
-
 		pomodoroSubtitle = Ui.loadResource( Rez.Strings.PomodoroSubtitle );
 		shortBreakLabel = Ui.loadResource( Rez.Strings.ShortBreakLabel );
 		longBreakLabel = Ui.loadResource( Rez.Strings.LongBreakLabel );
@@ -33,17 +28,10 @@ class GarmodoroView extends Ui.View {
 		centerY = dc.getHeight() / 2;
 	}
 
-	// Called when this View is brought to the foreground. Restore
-	// the state of this View and prepare it to be shown. This includes
-	// loading resources into memory.
 	function onShow() {
-		System.println( "onShow" );
 	}
 
-	// Update the view
 	function onUpdate( dc ) {
-		System.println( "onUpdate" );
-
 		dc.setColor( Gfx.COLOR_TRANSPARENT, Gfx.COLOR_BLACK );
 		dc.clear();
 		if ( isBreakTimerStarted ) {
@@ -70,10 +58,6 @@ class GarmodoroView extends Ui.View {
 		dc.drawText( me.centerX, ( me.centerY + 50 ), Gfx.FONT_MEDIUM, "Pomodoro #" + pomodoroNumber, Gfx.TEXT_JUSTIFY_CENTER );
 	}
 
-	// Called when this View is removed from the screen. Save the
-	// state of this View here. This includes freeing resources from
-	// memory.
 	function onHide() {
-		System.println( "onHide" );
 	}
 }

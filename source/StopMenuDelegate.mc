@@ -1,4 +1,6 @@
+using Toybox.Application as Application;
 using Toybox.Attention as Attention;
+using Toybox.System as System;
 using Toybox.WatchUi as Ui;
 
 class StopMenuDelegate extends Ui.MenuInputDelegate {
