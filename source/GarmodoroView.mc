@@ -13,11 +13,10 @@ class GarmodoroView extends Ui.View {
 	hidden var centerY;
 	hidden var thaiHotOffset;
 	hidden var largeOffset;
-	hidden var mediumOffset;
-	hidden var screenShape;
 
 	hidden var pomodoroOffset;
 	hidden var captionOffset;
+	hidden var breakLabelOffset;
 
 	function initialize() {
 		View.initialize();
@@ -34,14 +33,20 @@ class GarmodoroView extends Ui.View {
 		centerY = me.height / 2;
 		thaiHotOffset = Gfx.getFontHeight( Gfx.FONT_NUMBER_THAI_HOT ) / 2;
 		largeOffset = Gfx.getFontHeight( Gfx.FONT_LARGE );
-		mediumOffset = Gfx.getFontHeight( Gfx.FONT_MEDIUM );
-		screenShape = System.getDeviceSettings().screenShape;
+		var mediumOffset = Gfx.getFontHeight( Gfx.FONT_MEDIUM );
+		var mediumOffsetHalf = mediumOffset / 2;
+		var screenShape = System.getDeviceSettings().screenShape;
 
-		me.pomodoroOffset = me.height - 5 - me.mediumOffset;
+		me.pomodoroOffset = me.height - 5 - mediumOffset;
 		if ( System.SCREEN_SHAPE_ROUND == screenShape ) {
-			me.pomodoroOffset -= me.mediumOffset / 2;
+			me.pomodoroOffset -= mediumOffsetHalf;
 		}
 		me.captionOffset = me.pomodoroOffset - Gfx.getFontHeight( Gfx.FONT_TINY );	
+
+		me.breakLabelOffset = 5;
+		if ( System.SCREEN_SHAPE_RECTANGLE != screenShape ) {
+			me.breakLabelOffset += mediumOffsetHalf;
+		}
 	}
 
 	function onShow() {
@@ -52,11 +57,7 @@ class GarmodoroView extends Ui.View {
 		dc.clear();
 		if ( isBreakTimerStarted ) {
 			dc.setColor( Gfx.COLOR_DK_GREEN, Gfx.COLOR_TRANSPARENT );
-			if ( System.SCREEN_SHAPE_RECTANGLE == me.screenShape ) {
-				dc.drawText( me.centerX, 5, Gfx.FONT_MEDIUM, isLongBreak() ? me.longBreakLabel : me.shortBreakLabel, Gfx.TEXT_JUSTIFY_CENTER );
-			} else {
-				dc.drawText( me.centerX, 5 + ( mediumOffset / 2 ), Gfx.FONT_MEDIUM, isLongBreak() ? me.longBreakLabel : me.shortBreakLabel, Gfx.TEXT_JUSTIFY_CENTER );
-			}
+			dc.drawText( me.centerX, me.breakLabelOffset, Gfx.FONT_MEDIUM, isLongBreak() ? me.longBreakLabel : me.shortBreakLabel, Gfx.TEXT_JUSTIFY_CENTER );
 
 			dc.setColor( Gfx.COLOR_GREEN, Gfx.COLOR_TRANSPARENT );
 			dc.drawText( me.centerX, me.centerY - me.thaiHotOffset, Gfx.FONT_NUMBER_THAI_HOT, minutes.format( "%02d" ), Gfx.TEXT_JUSTIFY_CENTER );
