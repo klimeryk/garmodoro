@@ -5,6 +5,7 @@ using Toybox.WatchUi as Ui;
 var timer;
 var tickTimer;
 var minutes = 0;
+var minutesOfBreakLeft = 0;
 var pomodoroNumber = 1;
 var isPomodoroTimerStarted = false;
 var isBreakTimerStarted = false;
@@ -30,6 +31,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 	hidden var tickStrength = APP.getProperty( "tickStrength" );
 	hidden var tickDuration = APP.getProperty( "tickDuration" );
 
+
 	function initialize() {
 		System.println( "GomodoroDelegate: initialize" );
 		Ui.BehaviorDelegate.initialize();
@@ -46,8 +48,8 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 			isPomodoroTimerStarted = false;
 
 			var isLongBreak = ( pomodoroNumber % me.numberOfPomodorosBeforeLongBreak ) == 0;
-			var minutesOfBreak = isLongBreak ? me.longBreakLength : me.shortBreakLength;
-			timer.start( method( :breakCallback ), minutesOfBreak * 60 * 1000, false );
+			minutesOfBreakLeft = isLongBreak ? me.longBreakLength : me.shortBreakLength;
+			timer.start( method( :breakCallback ), 60 * 1000, true );
 			isBreakTimerStarted = true;
 		}
 
@@ -55,11 +57,17 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 	}
 
 	function breakCallback() {
-		play( Attention.TONE_INTERVAL_ALERT );
-		ping( 100, 1500 );
-		isBreakTimerStarted = false;
-		pomodoroNumber += 1;
-		minutes = me.pomodoroLength;
+		minutesOfBreakLeft -= 1;
+
+		if ( minutesOfBreakLeft == 0 ) {
+			play( Attention.TONE_INTERVAL_ALERT );
+			ping( 100, 1500 );
+			timer.stop();
+
+			isBreakTimerStarted = false;
+			pomodoroNumber += 1;
+			minutes = me.pomodoroLength;
+		}
 
 		Ui.requestUpdate();
 	}
