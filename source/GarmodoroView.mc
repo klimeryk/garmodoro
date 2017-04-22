@@ -12,11 +12,11 @@ class GarmodoroView extends Ui.View {
 	hidden var centerX;
 	hidden var centerY;
 	hidden var thaiHotOffset;
-	hidden var largeOffset;
 
 	hidden var pomodoroOffset;
 	hidden var captionOffset;
 	hidden var breakLabelOffset;
+	hidden var readyLabelOffset;
 
 	function initialize() {
 		View.initialize();
@@ -32,7 +32,7 @@ class GarmodoroView extends Ui.View {
 		centerX = dc.getWidth() / 2;
 		centerY = me.height / 2;
 		thaiHotOffset = Gfx.getFontHeight( Gfx.FONT_NUMBER_THAI_HOT ) / 2;
-		largeOffset = Gfx.getFontHeight( Gfx.FONT_LARGE );
+		var largeOffset = Gfx.getFontHeight( Gfx.FONT_LARGE );
 		var mediumOffset = Gfx.getFontHeight( Gfx.FONT_MEDIUM );
 		var mediumOffsetHalf = mediumOffset / 2;
 		var screenShape = System.getDeviceSettings().screenShape;
@@ -47,6 +47,8 @@ class GarmodoroView extends Ui.View {
 		if ( System.SCREEN_SHAPE_RECTANGLE != screenShape ) {
 			me.breakLabelOffset += mediumOffsetHalf;
 		}
+
+		me.readyLabelOffset = me.centerY - ( largeOffset / 2 );
 	}
 
 	function onShow() {
@@ -71,7 +73,7 @@ class GarmodoroView extends Ui.View {
 			me.drawCaption( dc );
 		} else {
 			dc.setColor( Gfx.COLOR_ORANGE, Gfx.COLOR_TRANSPARENT );
-			dc.drawText( me.centerX, me.centerY - ( largeOffset / 2 ), Gfx.FONT_LARGE, me.readyLabel, Gfx.TEXT_JUSTIFY_CENTER );
+			dc.drawText( me.centerX, me.readyLabelOffset, Gfx.FONT_LARGE, me.readyLabel, Gfx.TEXT_JUSTIFY_CENTER );
 		}
 
 		dc.setColor( Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT );
