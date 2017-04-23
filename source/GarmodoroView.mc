@@ -56,25 +56,23 @@ class GarmodoroView extends Ui.View {
 		dc.setColor( Gfx.COLOR_TRANSPARENT, Gfx.COLOR_BLACK );
 		dc.clear();
 		if ( isBreakTimerStarted ) {
-			dc.setColor( Gfx.COLOR_DK_GREEN, Gfx.COLOR_TRANSPARENT );
-			dc.drawText( me.centerX, me.breakLabelOffset, Gfx.FONT_MEDIUM, isLongBreak() ? me.longBreakLabel : me.shortBreakLabel, Gfx.TEXT_JUSTIFY_CENTER );
-
 			dc.setColor( Gfx.COLOR_GREEN, Gfx.COLOR_TRANSPARENT );
+			dc.drawText( me.centerX, me.breakLabelOffset, Gfx.FONT_MEDIUM, isLongBreak() ? me.longBreakLabel : me.shortBreakLabel, Gfx.TEXT_JUSTIFY_CENTER );
 			me.drawMinutes( dc );
 
 			dc.setColor( Gfx.COLOR_DK_GREEN, Gfx.COLOR_TRANSPARENT );
 			me.drawCaption( dc );
 		} else if ( isPomodoroTimerStarted ) {
-			dc.setColor( Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT );
+			dc.setColor( Gfx.COLOR_YELLOW, Gfx.COLOR_TRANSPARENT );
 			me.drawMinutes( dc );
-			dc.setColor( Gfx.COLOR_DK_RED, Gfx.COLOR_TRANSPARENT );
+			dc.setColor( Gfx.COLOR_ORANGE, Gfx.COLOR_TRANSPARENT );
 			me.drawCaption( dc );
 		} else {
 			dc.setColor( Gfx.COLOR_ORANGE, Gfx.COLOR_TRANSPARENT );
 			dc.drawText( me.centerX, me.readyLabelOffset, Gfx.FONT_LARGE, me.readyLabel, Gfx.TEXT_JUSTIFY_CENTER );
 		}
 
-		dc.setColor( Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT );
+		dc.setColor( Gfx.COLOR_LT_GRAY, Gfx.COLOR_TRANSPARENT );
 		dc.drawText( me.centerX, me.pomodoroOffset, Gfx.FONT_MEDIUM, "Pomodoro #" + pomodoroNumber, Gfx.TEXT_JUSTIFY_CENTER );
 	}
 
