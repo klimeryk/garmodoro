@@ -42,7 +42,7 @@ class GarmodoroView extends Ui.View {
 
 		me.pomodoroOffset = 5;
 		if ( System.SCREEN_SHAPE_RECTANGLE != screenShape ) {
-			me.pomodoroOffset += mediumOffsetHalf;
+			me.pomodoroOffset += mediumOffset;
 		}
 
 		me.readyLabelOffset = me.centerY - ( Gfx.getFontHeight( Gfx.FONT_LARGE ) / 2 );
