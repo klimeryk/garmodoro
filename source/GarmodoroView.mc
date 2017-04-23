@@ -34,15 +34,15 @@ class GarmodoroView extends Ui.View {
 		var mediumOffsetHalf = mediumOffset / 2;
 		var screenShape = System.getDeviceSettings().screenShape;
 
-		me.pomodoroOffset = height - 5 - mediumOffset;
+		me.breakLabelOffset = height - 5 - mediumOffset;
 		if ( System.SCREEN_SHAPE_ROUND == screenShape ) {
-			me.pomodoroOffset -= mediumOffsetHalf;
+			me.breakLabelOffset -= mediumOffsetHalf;
 		}
-		me.captionOffset = me.pomodoroOffset - Gfx.getFontHeight( Gfx.FONT_TINY );	
+		me.captionOffset = me.breakLabelOffset - Gfx.getFontHeight( Gfx.FONT_TINY );	
 
-		me.breakLabelOffset = 5;
+		me.pomodoroOffset = 5;
 		if ( System.SCREEN_SHAPE_RECTANGLE != screenShape ) {
-			me.breakLabelOffset += mediumOffsetHalf;
+			me.pomodoroOffset += mediumOffsetHalf;
 		}
 
 		me.readyLabelOffset = me.centerY - ( Gfx.getFontHeight( Gfx.FONT_LARGE ) / 2 );
