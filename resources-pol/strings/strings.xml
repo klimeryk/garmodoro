@@ -1,17 +1,17 @@
 <strings>
-    <string id="AppName">Pomodoro</string>
-    <string id="PomodoroLength">Czas trwania jednego Pomodoro (w minutach)</string>
-    <string id="ShortBreakLength">Czas trwania krótkiej przerwy pomiędzy Pomodoro</string>
-    <string id="LongBreakLength">Czas trwania długiej przerwy pomiędzy grupą Pomodoro</string>
-    <string id="NumberOfPomodorosBeforeLongBreak">Liczba Pomodoro w grupie</string>
-	<string id="TickStrength">Siła wibracji co tyknięcie</string>
-	<string id="TickDuration">Długość wibracji co tyknięcie</string>
+  <string id="AppName">Pomodoro</string>
+  <string id="PomodoroLength">Czas trwania jednego Pomodoro (w minutach)</string>
+  <string id="ShortBreakLength">Czas trwania krótkiej przerwy pomiędzy Pomodoro</string>
+  <string id="LongBreakLength">Czas trwania długiej przerwy pomiędzy grupą Pomodoro</string>
+  <string id="NumberOfPomodorosBeforeLongBreak">Liczba Pomodoro w grupie</string>
+  <string id="TickStrength">Siła wibracji co tyknięcie</string>
+  <string id="TickDuration">Długość wibracji co tyknięcie</string>
 
-	<string id="PomodoroSubtitle">minut pozostało</string>
-	<string id="ShortBreakLabel">Krótka przerwa!</string>
-	<string id="LongBreakLabel">Długa przerwa!</string>
-	<string id="ReadyLabel">Gotowy!</string>
+  <string id="PomodoroSubtitle">minut pozostało</string>
+  <string id="ShortBreakLabel">Krótka przerwa!</string>
+  <string id="LongBreakLabel">Długa przerwa!</string>
+  <string id="ReadyLabel">Gotowy!</string>
 
-	<string id="RestartMenuLabel">Restart</string>
-	<string id="ExitMenuLabel">Zakończ</string>
+  <string id="RestartMenuLabel">Restart</string>
+  <string id="ExitMenuLabel">Zakończ</string>
 </strings>
