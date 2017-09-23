@@ -33,6 +33,7 @@
         <iq:languages>
             <iq:language>eng</iq:language>
             <iq:language>pol</iq:language>
+            <iq:language>spa</iq:language>
         </iq:languages>
 
     </iq:application>
