@@ -1,0 +1,17 @@
+<strings>
+	<string id="AppName">Pomodoro</string>
+	<string id="PomodoroLength">Duración del Pomodoro (en minutos)</string>
+	<string id="ShortBreakLength">Duración del descanso corto entre Pomodoros</string>
+	<string id="LongBreakLength">Duración del descanso largo luego de un grupo de Pomodoros</string>
+	<string id="NumberOfPomodorosBeforeLongBreak">Cantidad de Pomodoros en un grupo</string>
+	<string id="TickStrength">Fuerza de la vibración en cada segundo</string>
+	<string id="TickDuration">Duración de la vibración en cada segundo</string>
+
+	<string id="PomodoroSubtitle">minutos restantes</string>
+	<string id="ShortBreakLabel">Descanso corto!</string>
+	<string id="LongBreakLabel">Descanso largo!</string>
+	<string id="ReadyLabel">Listo!</string>
+
+	<string id="RestartMenuLabel">Reiniciar</string>
+	<string id="ExitMenuLabel">Salir</string>
+</strings>
