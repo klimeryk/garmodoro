@@ -77,6 +77,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 	}
 
 	function onBack() {
+		Ui.popView( Ui.SLIDE_RIGHT );
 		return true;
 	}
 
