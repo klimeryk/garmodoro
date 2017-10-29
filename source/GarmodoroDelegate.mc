@@ -69,7 +69,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 	}
 
 	function shouldTick() {
-		return App.getApp().getProperty( "tickStrength" ) > 0 && App.getApp().getProperty( "tickDuration" ) > 0;
+		return App.getApp().getProperty( "tickStrength" ) > 0;
 	}
 
 	function tickCallback() {
