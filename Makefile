@@ -1,26 +1,26 @@
 include properties.mk
 
-sources = `find source -name '*.mc'`
-resources = `find resources -name '*.xml' | tr '\n' ':' | sed 's/.$$//'`
-device_resources = `find resources-$(DEVICE) -name '*.xml' | tr '\n' ':' | sed 's/.$$//'`
 appName = `grep entry manifest.xml | sed 's/.*entry="\([^"]*\).*/\1/'`
-parameters = ``
+devices = `grep 'iq:product id' manifest.xml | sed 's/.*iq:product id="\([^"]*\).*/\1/'`
 
 build:
-	$(SDK_HOME)/bin/monkeyc --warn --output bin/$(appName).prg -m manifest.xml \
-	-z $(resources):$(device_resources) -u $(SDK_HOME)/bin/devices.xml \
-	-y $(PRIVATE_KEY) \
-	-p $(SDK_HOME)/bin/projectInfo.xml -d $(DEVICE) $(sources) $(parameters)
+	$(SDK_HOME)/bin/monkeyc \
+	--jungles ./monkey.jungle \
+	--device $(DEVICE) \
+	--output bin/$(appName).prg \
+	--private-key $(PRIVATE_KEY) \
+	--warn
 
 buildall:
-	@for device in $(SUPPORTED_DEVICES_LIST); do \
+	@for device in $(devices); do \
 		echo "-----"; \
 		echo "Building for" $$device; \
-		device_resouces=sudo find resources-$$device -name '*.xml' | tr '\n' ':' | sed 's/.$$//' > /dev/null ; \
-    $(SDK_HOME)/bin/monkeyc --warn --output bin/$(appName)-$$device.prg -m manifest.xml \
-    -z $(resources):$(device_resources) -u $(SDK_HOME)/bin/devices.xml \
-    -y $(PRIVATE_KEY) \
-    -p $(SDK_HOME)/bin/projectInfo.xml -d $$device $(sources); \
+    $(SDK_HOME)/bin/monkeyc \
+		--jungles ./monkey.jungle \
+		--device $$device \
+		--output bin/$(appName)-$$device.prg \
+		--private-key $(PRIVATE_KEY) \
+		--warn; \
 	done
 
 run: build
@@ -32,10 +32,13 @@ deploy: build
 	@cp bin/$(appName).prg $(DEPLOY)
 
 package:
-	@$(SDK_HOME)/bin/monkeyc --warn --output bin/$(appName).iq -m manifest.xml \
-	-z $(resources):$(device_resources) -u $(SDK_HOME)/bin/devices.xml \
-	-y $(PRIVATE_KEY)
-	-p $(SDK_HOME)/bin/projectInfo.xml $(sources) -e -r
+	@$(SDK_HOME)/bin/monkeyc \
+	--jungles ./monkey.jungle \
+	--package-app \
+	--release \
+	--output bin/$(appName).iq \
+	--private-key $(PRIVATE_KEY) \
+	--warn
 
 clean:
 	@rm -rf bin/*
