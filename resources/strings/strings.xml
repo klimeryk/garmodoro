@@ -6,6 +6,7 @@
     <string id="NumberOfPomodorosBeforeLongBreak">The number of Pomodoros in a group</string>
 	<string id="TickStrength">Strength of the vibration on every tick</string>
 	<string id="TickDuration">Duration of the vibration on every tick</string>
+	<string id="MuteSounds">Mute sounds</string>
 
 	<string id="PomodoroSubtitle">minutes left</string>
 	<string id="ShortBreakLabel">Short break!</string>

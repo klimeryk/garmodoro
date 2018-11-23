@@ -6,6 +6,7 @@
     <string id="NumberOfPomodorosBeforeLongBreak">Liczba Pomodoro w grupie</string>
 	<string id="TickStrength">Siła wibracji co tyknięcie</string>
 	<string id="TickDuration">Długość wibracji co tyknięcie</string>
+	<string id="MuteSounds">Wycisz dźwięki</string>
 
 	<string id="PomodoroSubtitle">minut pozostało</string>
 	<string id="ShortBreakLabel">Krótka przerwa!</string>

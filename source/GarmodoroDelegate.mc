@@ -16,7 +16,7 @@ function ping( dutyCycle, length ) {
 }
 
 function play( tone ) {
-	if ( Attention has :playTone ) {
+	if ( Attention has :playTone && ! App.getApp().getProperty( "muteSounds" ) ) {
 		Attention.playTone( tone );
 	}
 }
