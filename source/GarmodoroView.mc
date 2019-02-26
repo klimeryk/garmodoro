@@ -1,6 +1,9 @@
 using Toybox.WatchUi as Ui;
 using Toybox.Graphics as Gfx;
 using Toybox.System as System;
+using Toybox.Time;
+using Toybox.Time.Gregorian;
+using Toybox.Lang;
 
 class GarmodoroView extends Ui.View {
 	hidden var pomodoroSubtitle;
@@ -13,9 +16,9 @@ class GarmodoroView extends Ui.View {
 
 	hidden var pomodoroOffset;
 	hidden var captionOffset;
-	hidden var breakLabelOffset;
 	hidden var readyLabelOffset;
 	hidden var minutesOffset;
+	hidden var timeOffset;
 
 	function initialize() {
 		View.initialize();
@@ -32,21 +35,19 @@ class GarmodoroView extends Ui.View {
 		centerY = height / 2;
 		var mediumOffset = Gfx.getFontHeight( Gfx.FONT_MEDIUM );
 		var mediumOffsetHalf = mediumOffset / 2;
+		var mildOffset = Gfx.getFontHeight( Gfx.FONT_NUMBER_MILD );
 		var screenShape = System.getDeviceSettings().screenShape;
 
-		me.breakLabelOffset = height - 5 - mediumOffset;
-		if ( System.SCREEN_SHAPE_ROUND == screenShape ) {
-			me.breakLabelOffset -= mediumOffsetHalf;
-		}
-		me.captionOffset = me.breakLabelOffset - Gfx.getFontHeight( Gfx.FONT_TINY );	
-
+		me.timeOffset = height - mildOffset;
 		me.pomodoroOffset = 5;
 		if ( System.SCREEN_SHAPE_RECTANGLE != screenShape ) {
 			me.pomodoroOffset += mediumOffset;
+			me.timeOffset -= 5;
 		}
 
 		me.readyLabelOffset = me.centerY - ( Gfx.getFontHeight( Gfx.FONT_LARGE ) / 2 );
 		me.minutesOffset = me.centerY - ( Gfx.getFontHeight( Gfx.FONT_NUMBER_THAI_HOT ) / 2 );
+		me.captionOffset = me.timeOffset - Gfx.getFontHeight( Gfx.FONT_TINY );	
 	}
 
 	function onShow() {
@@ -57,7 +58,7 @@ class GarmodoroView extends Ui.View {
 		dc.clear();
 		if ( isBreakTimerStarted ) {
 			dc.setColor( Gfx.COLOR_GREEN, Gfx.COLOR_TRANSPARENT );
-			dc.drawText( me.centerX, me.breakLabelOffset, Gfx.FONT_MEDIUM, isLongBreak() ? me.longBreakLabel : me.shortBreakLabel, Gfx.TEXT_JUSTIFY_CENTER );
+			dc.drawText( me.centerX, me.pomodoroOffset, Gfx.FONT_MEDIUM, isLongBreak() ? me.longBreakLabel : me.shortBreakLabel, Gfx.TEXT_JUSTIFY_CENTER );
 			me.drawMinutes( dc );
 
 			dc.setColor( Gfx.COLOR_DK_GREEN, Gfx.COLOR_TRANSPARENT );
@@ -72,8 +73,13 @@ class GarmodoroView extends Ui.View {
 			dc.drawText( me.centerX, me.readyLabelOffset, Gfx.FONT_LARGE, me.readyLabel, Gfx.TEXT_JUSTIFY_CENTER );
 		}
 
+		if ( ! isBreakTimerStarted ) {
+			dc.setColor( Gfx.COLOR_LT_GRAY, Gfx.COLOR_TRANSPARENT );
+			dc.drawText( me.centerX, me.pomodoroOffset, Gfx.FONT_MEDIUM, "Pomodoro #" + pomodoroNumber, Gfx.TEXT_JUSTIFY_CENTER );
+		}
+
 		dc.setColor( Gfx.COLOR_LT_GRAY, Gfx.COLOR_TRANSPARENT );
-		dc.drawText( me.centerX, me.pomodoroOffset, Gfx.FONT_MEDIUM, "Pomodoro #" + pomodoroNumber, Gfx.TEXT_JUSTIFY_CENTER );
+		dc.drawText( self.centerX, self.timeOffset, Gfx.FONT_NUMBER_MILD, self.getTime(), Gfx.TEXT_JUSTIFY_CENTER );
 	}
 
 	hidden function drawMinutes( dc ) {
@@ -85,5 +91,13 @@ class GarmodoroView extends Ui.View {
 	}
 
 	function onHide() {
+	}
+
+	function getTime() {
+		var today = Gregorian.info( Time.now(), Time.FORMAT_SHORT );
+		return Lang.format( "$1$:$2$", [
+			today.hour.format( "%02d" ),
+			today.min.format( "%02d" ),
+		] );
 	}
 }
