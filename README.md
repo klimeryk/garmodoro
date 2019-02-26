@@ -25,12 +25,8 @@ See https://github.com/danielsiwiec/garmin-connect-seed for the full list of sup
 
 ## Screenshots
 
-<img width="395" alt="screen shot 2017-05-03 at 00 14 46" src="https://cloud.githubusercontent.com/assets/3392497/25642395/c15b37ea-2f99-11e7-958e-7320f4cf1703.png">
-<img width="399" alt="screen shot 2017-05-03 at 00 15 17" src="https://cloud.githubusercontent.com/assets/3392497/25641940/149f763a-2f97-11e7-8af5-9a3a4dc28002.png">
-<img width="402" alt="screen shot 2017-05-03 at 00 15 52" src="https://cloud.githubusercontent.com/assets/3392497/25641941/14a0451a-2f97-11e7-9283-66a4931bfdc5.png">
-<img width="401" alt="screen shot 2017-05-03 at 00 16 54" src="https://cloud.githubusercontent.com/assets/3392497/25641939/149f917e-2f97-11e7-96c5-1be149e9a9ce.png">
-<img width="401" alt="screen shot 2017-05-03 at 00 18 01" src="https://cloud.githubusercontent.com/assets/3392497/25641938/149f4638-2f97-11e7-9bd5-7ee560150325.png">
-<img width="365" alt="screen shot 2017-05-03 at 00 18 38" src="https://cloud.githubusercontent.com/assets/3392497/25642291/35f28d7a-2f99-11e7-8ab9-37249ad9ee7b.png">
-<img width="443" alt="screen shot 2017-05-03 at 00 19 28" src="https://cloud.githubusercontent.com/assets/3392497/25641942/14cae176-2f97-11e7-80a9-baf62fc69492.png">
-<img width="304" alt="screen shot 2017-05-03 at 00 19 54" src="https://cloud.githubusercontent.com/assets/3392497/25642397/c189a6de-2f99-11e7-8f70-79cf4152a56b.png">
-<img width="302" alt="screen shot 2017-05-03 at 00 20 35" src="https://cloud.githubusercontent.com/assets/3392497/25642396/c187cc1a-2f99-11e7-9672-6a72f9034eb0.png">
+<img width="395" alt="screen shot 2017-05-03 at 00 14 46" src="https://user-images.githubusercontent.com/3392497/53385813-b0b42c00-3977-11e9-9516-742a2eb1e627.jpg">
+<img width="399" alt="screen shot 2017-05-03 at 00 15 17" src="https://user-images.githubusercontent.com/3392497/53385814-b0b42c00-3977-11e9-83b3-a7e56401d30d.jpg">
+<img width="402" alt="screen shot 2017-05-03 at 00 15 52" src="https://user-images.githubusercontent.com/3392497/53385815-b0b42c00-3977-11e9-9b98-ca4a74020a8c.jpg">
+<img width="401" alt="screen shot 2017-05-03 at 00 16 54" src="https://user-images.githubusercontent.com/3392497/53385816-b0b42c00-3977-11e9-8f45-88a8241adba2.jpg">
+<img width="401" alt="screen shot 2017-05-03 at 00 18 01" src="https://user-images.githubusercontent.com/3392497/53385817-b0b42c00-3977-11e9-86d1-1ad18f670628.jpg">
