@@ -25,7 +25,7 @@ See https://github.com/danielsiwiec/garmin-connect-seed for the full list of sup
 
 ## Screenshots
 
-<img width="395" alt="screen shot 2017-05-03 at 00 14 46" src="https://user-images.githubusercontent.com/3392497/53385813-b0b42c00-3977-11e9-9516-742a2eb1e627.jpg">
+<img width="395" alt="screen shot 2017-05-03 at 00 14 46" src="https://user-images.githubusercontent.com/3392497/53386026-6bdcc500-3978-11e9-893d-c8d26818e7d2.jpg">
 <img width="399" alt="screen shot 2017-05-03 at 00 15 17" src="https://user-images.githubusercontent.com/3392497/53385814-b0b42c00-3977-11e9-83b3-a7e56401d30d.jpg">
 <img width="402" alt="screen shot 2017-05-03 at 00 15 52" src="https://user-images.githubusercontent.com/3392497/53385815-b0b42c00-3977-11e9-9b98-ca4a74020a8c.jpg">
 <img width="401" alt="screen shot 2017-05-03 at 00 16 54" src="https://user-images.githubusercontent.com/3392497/53385816-b0b42c00-3977-11e9-8f45-88a8241adba2.jpg">
