@@ -40,6 +40,7 @@
             <iq:product id="vivoactive"/>
             <iq:product id="vivoactive3"/>
             <iq:product id="vivoactive3m"/>
+            <iq:product id="vivoactive3mlte"/>
             <iq:product id="vivoactive_hr"/>
         </iq:products>
         <iq:permissions/>
