@@ -32,4 +32,27 @@ module Pomodoro {
 		isPomodoroTimerStarted = false;
 		isBreakTimerStarted = false;
 	}
+
+	// for displaying
+	function getMinutesLeft() {
+		return minutes;
+	}
+
+	// for displaying
+	function getIteration() {
+		return pomodoroNumber;
+	}
+
+	function isInBreakState() {
+		return isBreakTimerStarted;
+	}
+
+	function isInRunningState() {
+		return isPomodoroTimerStarted;
+	}
+
+	// TODO: inline isLongBreak() and rename
+	function isLongBreak2() {
+		return isLongBreak();
+	}
 }

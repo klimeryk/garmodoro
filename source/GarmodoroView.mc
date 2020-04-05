@@ -4,6 +4,7 @@ using Toybox.System as System;
 using Toybox.Time;
 using Toybox.Time.Gregorian;
 using Toybox.Lang;
+using Pomodoro;
 
 class GarmodoroView extends Ui.View {
 	hidden var pomodoroSubtitle;
@@ -56,38 +57,47 @@ class GarmodoroView extends Ui.View {
 	function onUpdate( dc ) {
 		dc.setColor( Gfx.COLOR_TRANSPARENT, Gfx.COLOR_BLACK );
 		dc.clear();
-		if ( isBreakTimerStarted ) {
+		if ( Pomodoro.isInBreakState() ) {
+			var labelForBreak = Pomodoro.isLongBreak2() ? 
+						me.longBreakLabel : 
+						me.shortBreakLabel;
 			dc.setColor( Gfx.COLOR_GREEN, Gfx.COLOR_TRANSPARENT );
-			dc.drawText( me.centerX, me.pomodoroOffset, Gfx.FONT_MEDIUM, isLongBreak() ? me.longBreakLabel : me.shortBreakLabel, Gfx.TEXT_JUSTIFY_CENTER );
+			dc.drawText( me.centerX, me.pomodoroOffset, Gfx.FONT_MEDIUM, 
+						labelForBreak, Gfx.TEXT_JUSTIFY_CENTER );
 			me.drawMinutes( dc );
 
 			dc.setColor( Gfx.COLOR_DK_GREEN, Gfx.COLOR_TRANSPARENT );
 			me.drawCaption( dc );
-		} else if ( isPomodoroTimerStarted ) {
+		} else if ( Pomodoro.isInRunningState() ) {
 			dc.setColor( Gfx.COLOR_YELLOW, Gfx.COLOR_TRANSPARENT );
 			me.drawMinutes( dc );
 			dc.setColor( Gfx.COLOR_ORANGE, Gfx.COLOR_TRANSPARENT );
 			me.drawCaption( dc );
-		} else {
+		} else { // Pomodoro is in ready state
 			dc.setColor( Gfx.COLOR_ORANGE, Gfx.COLOR_TRANSPARENT );
-			dc.drawText( me.centerX, me.readyLabelOffset, Gfx.FONT_LARGE, me.readyLabel, Gfx.TEXT_JUSTIFY_CENTER );
+			dc.drawText( me.centerX, me.readyLabelOffset, Gfx.FONT_LARGE,
+						me.readyLabel, Gfx.TEXT_JUSTIFY_CENTER );
 		}
 
-		if ( ! isBreakTimerStarted ) {
+		if ( ! Pomodoro.isInBreakState() ) {
 			dc.setColor( Gfx.COLOR_LT_GRAY, Gfx.COLOR_TRANSPARENT );
-			dc.drawText( me.centerX, me.pomodoroOffset, Gfx.FONT_MEDIUM, "Pomodoro #" + pomodoroNumber, Gfx.TEXT_JUSTIFY_CENTER );
+			dc.drawText( me.centerX, me.pomodoroOffset, Gfx.FONT_MEDIUM, "Pomodoro #" + 
+						Pomodoro.getIteration(), Gfx.TEXT_JUSTIFY_CENTER );
 		}
 
 		dc.setColor( Gfx.COLOR_LT_GRAY, Gfx.COLOR_TRANSPARENT );
-		dc.drawText( self.centerX, self.timeOffset, Gfx.FONT_NUMBER_MILD, self.getTime(), Gfx.TEXT_JUSTIFY_CENTER );
+		dc.drawText( self.centerX, self.timeOffset, Gfx.FONT_NUMBER_MILD, 
+					self.getTime(), Gfx.TEXT_JUSTIFY_CENTER );
 	}
 
 	hidden function drawMinutes( dc ) {
-		dc.drawText( me.centerX, me.minutesOffset, Gfx.FONT_NUMBER_THAI_HOT, minutes.format( "%02d" ), Gfx.TEXT_JUSTIFY_CENTER );
+		dc.drawText( me.centerX, me.minutesOffset, Gfx.FONT_NUMBER_THAI_HOT, 
+					Pomodoro.getMinutesLeft().format( "%02d" ), Gfx.TEXT_JUSTIFY_CENTER );
 	}
 
 	hidden function drawCaption( dc ) {
-		dc.drawText( me.centerX, me.captionOffset, Gfx.FONT_TINY, me.pomodoroSubtitle, Gfx.TEXT_JUSTIFY_CENTER );
+		dc.drawText( me.centerX, me.captionOffset, Gfx.FONT_TINY, 
+					me.pomodoroSubtitle, Gfx.TEXT_JUSTIFY_CENTER );
 	}
 
 	function onHide() {
