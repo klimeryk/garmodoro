@@ -9,6 +9,7 @@ using Toybox.Timer as Timer;
 module Pomodoro {
 // TODO: move pomodoro code from other files here
 
+	// called when app is started for the first time
 	function initialize() {	
 		timer = new Timer.Timer();
 		tickTimer = new Timer.Timer();
@@ -17,5 +18,18 @@ module Pomodoro {
 	function stopTimers() {
 		tickTimer.stop();
 		timer.stop();
+	}
+
+	// called when "reset" action is selected in menu
+	function resetFromMenu() {
+		play( 9 ); // Attention.TONE_RESET
+		ping( 50, 1500 );
+
+		stopTimers();
+
+		resetMinutes();
+		pomodoroNumber = 1;
+		isPomodoroTimerStarted = false;
+		isBreakTimerStarted = false;
 	}
 }
