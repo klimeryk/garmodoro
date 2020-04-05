@@ -6,6 +6,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 		Ui.BehaviorDelegate.initialize();
 	}
 
+	// TODO move to Pomodoro.countdownRunningMinutes()
 	function pomodoroCallback() {
 		minutes -= 1;
 
@@ -24,6 +25,8 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 		Ui.requestUpdate();
 	}
 
+	// TODO move to Pomodoro.countdownBreakMinutes()
+	// TODO merge this with Pomodoro.countdownRunningMinutes()
 	function breakCallback() {
 		minutes -= 1;
 
@@ -40,10 +43,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 		Ui.requestUpdate();
 	}
 
-	function shouldTick() {
-		return App.getApp().getProperty( "tickStrength" ) > 0;
-	}
-
+	// TODO: move to Pomodoro.makeTickingSound()
 	function tickCallback() {
 		ping( App.getApp().getProperty( "tickStrength" ), App.getApp().getProperty( "tickDuration" ) );
 	}
@@ -65,19 +65,21 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 		if ( isBreakTimerStarted || isPomodoroTimerStarted ) {
 			Ui.pushView( new Rez.Menus.StopMenu(), new StopMenuDelegate(), Ui.SLIDE_UP );
 			return true;
-		}
+		} // else: we are in ready state
 
+		// TODO: extract to Pomodoro.beginPomodoro()
 		play( 1 ); // Attention.TONE_START
 		ping( 75, 1500 );
 		resetMinutes();
 		timer.start( method( :pomodoroCallback ), 60 * 1000, true );
+		isPomodoroTimerStarted = true;
+
+		// TODO: extract to Pomodoro.beginTicking()
 		if ( me.shouldTick() ) {
 			tickTimer.start( method( :tickCallback ), 1000, true );
 		}
-		isPomodoroTimerStarted = true;
 
 		Ui.requestUpdate();
-
 		return true;
 	}
 }

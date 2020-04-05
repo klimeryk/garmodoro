@@ -33,6 +33,9 @@ function resetMinutes() {
 	minutes = App.getApp().getProperty( "pomodoroLength" );
 }
 
+function shouldTick() {
+	return App.getApp().getProperty( "tickStrength" ) > 0;
+}
 
 // acts a a singleton, hence no class
 module Pomodoro {
