@@ -1,33 +1,5 @@
 using Toybox.Application as App;
-using Toybox.Attention as Attention;
 using Toybox.WatchUi as Ui;
-
-var timer;
-var tickTimer;
-var minutes = 0;
-var pomodoroNumber = 1;
-var isPomodoroTimerStarted = false;
-var isBreakTimerStarted = false;
-
-function ping( dutyCycle, length ) {
-	if ( Attention has :vibrate ) {
-		Attention.vibrate( [ new Attention.VibeProfile( dutyCycle, length ) ] );
-	}
-}
-
-function play( tone ) {
-	if ( Attention has :playTone && ! App.getApp().getProperty( "muteSounds" ) ) {
-		Attention.playTone( tone );
-	}
-}
-
-function isLongBreak() {
-	return ( pomodoroNumber % App.getApp().getProperty( "numberOfPomodorosBeforeLongBreak" ) ) == 0;
-}
-
-function resetMinutes() {
-	minutes = App.getApp().getProperty( "pomodoroLength" );
-}
 
 class GarmodoroDelegate extends Ui.BehaviorDelegate {
 	function initialize() {
