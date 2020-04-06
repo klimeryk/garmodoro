@@ -90,25 +90,26 @@ module Pomodoro {
 		isBreakTimerStarted = false;
 	}
 
-	function countdownMinutesInRunning() {
+	function countdownMinutes() {
 		minutes -= 1;
 
 		if ( minutes == 0 ) {
-			beginBreakCountdown();
+			if( isInRunningState() ) {
+				beginBreakCountdown();
+			} else if (isInBreakState()) {
+				beginReadyState();
+			} else {
+				// will never be called in ready state
+			}
 		}
 
 		Ui.requestUpdate();
 	}
 
-	// TODO merge this with Pomodoro.countdownMinutesInRunning()
-	function countdownMinutesInBreak() {
-		minutes -= 1;
-
-		if ( minutes == 0 ) {
-			beginReadyState();
-		}
-
-		Ui.requestUpdate();
+	function beginCountdown() {
+		var timerRoutine =
+					new Lang.Method(Pomodoro, :countdownMinutes);
+		timer.start( timerRoutine, 60 * 1000, true );
 	}
 
 	function beginReadyState() {
@@ -144,12 +145,8 @@ module Pomodoro {
 		vibrate( 75, 1500 );
 
 		resetMinutesForPomodoro();
-		
-		var pomodoroTimerRoutine =
-					new Lang.Method(Pomodoro, :countdownMinutesInRunning);
-		timer.start( pomodoroTimerRoutine, 60 * 1000, true );
+		beginCountdown();
 		isPomodoroTimerStarted = true;
-
 		beginTickingIfEnabled();
 	}
 
@@ -161,10 +158,7 @@ module Pomodoro {
 		stopTimers();
 		isPomodoroTimerStarted = false;
 		resetMinutesForBreak();
-
-		var breakTimerRoutine =
-					new Lang.Method(Pomodoro, :countdownMinutesInBreak);
-		timer.start( breakTimerRoutine, 60 * 1000, true );
+		beginCountdown();
 		isBreakTimerStarted = true;
 	}
 }
