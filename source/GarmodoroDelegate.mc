@@ -12,6 +12,18 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 		return true;
 	}
 
+	function onSelect() {
+		if ( Pomodoro.isInReadyState() ) {
+			Pomodoro.beginPomodoro();
+			Ui.requestUpdate();
+		} else { // pomodoro is in running or break state
+			displayStopMenu();
+		}
+		return true;
+	}
+
+	// TODO: add onMenu() if supported on all watches
+
 	function onNextMode() {
 		return true;
 	}
@@ -20,16 +32,8 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 		return true;
 	}
 
-	function onSelect() {
-		if ( isBreakTimerStarted || isPomodoroTimerStarted ) {
-			Ui.pushView( new Rez.Menus.StopMenu(),
-						new StopMenuDelegate(), Ui.SLIDE_UP );
-			return true;
-		} // else: we are in ready state
-
-		Pomodoro.beginPomodoro();
-
-		Ui.requestUpdate();
-		return true;
+	function displayStopMenu() {
+		Ui.pushView( new Rez.Menus.StopMenu(),
+					new StopMenuDelegate(), Ui.SLIDE_UP );
 	}
 }

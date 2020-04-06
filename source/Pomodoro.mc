@@ -83,6 +83,11 @@ module Pomodoro {
 		return isPomodoroTimerStarted;
 	}
 
+	function isInReadyState() {
+		return ! isPomodoroTimerStarted && 
+					! isBreakTimerStarted;
+	}
+
 	// TODO: inline isLongBreak() and rename
 	function isLongBreak2() {
 		return isLongBreak();
