@@ -6,41 +6,41 @@ using Toybox.Attention as Attention;
 using Toybox.Timer as Timer;
 using Toybox.Lang as Lang;
 
-// global variables and functions
-// TODO: move Pomodoro global variables into module Pomodoro
-var timer;
-var tickTimer;
-var minutes = 0;
-var pomodoroNumber = 1;
-var isPomodoroTimerStarted = false;
-var isBreakTimerStarted = false;
-
-function ping( dutyCycle, length ) {
-	if ( Attention has :vibrate ) {
-		Attention.vibrate( [ new Attention.VibeProfile( dutyCycle, length ) ] );
-	}
-}
-
-function play( tone ) {
-	if ( Attention has :playTone && ! App.getApp().getProperty( "muteSounds" ) ) {
-		Attention.playTone( tone );
-	}
-}
-
-function isLongBreak() {
-	return ( pomodoroNumber % App.getApp().getProperty( "numberOfPomodorosBeforeLongBreak" ) ) == 0;
-}
-
-function resetMinutes() {
-	minutes = App.getApp().getProperty( "pomodoroLength" );
-}
-
-function shouldTick() {
-	return App.getApp().getProperty( "tickStrength" ) > 0;
-}
-
 // acts a a singleton, hence no class
 module Pomodoro {
+	var timer;
+	var tickTimer;
+	var minutes = 0;
+	var pomodoroNumber = 1;
+	var isPomodoroTimerStarted = false;
+	var isBreakTimerStarted = false;
+
+	function ping( dutyCycle, length ) {
+		if ( Attention has :vibrate ) {
+			Attention.vibrate([ new Attention.VibeProfile( dutyCycle, length ) ] );
+		}
+	}
+
+	function play( tone ) {
+		var isMuted =  App.getApp().getProperty( "muteSounds" );
+		if ( ! isMuted && Attention has :playTone ) {
+			Attention.playTone( tone );
+		}
+	}
+
+	function isLongBreak() {
+		var groupLength = App.getApp().getProperty( "numberOfPomodorosBeforeLongBreak" );
+		return ( pomodoroNumber % groupLength ) == 0;
+	}
+
+	function resetMinutes() {
+		minutes = App.getApp().getProperty( "pomodoroLength" );
+	}
+
+	function shouldTick() {
+		return App.getApp().getProperty( "tickStrength" ) > 0;
+	}
+
 	// called when app is started for the first time
 	function initialize() {	
 		timer = new Timer.Timer();
