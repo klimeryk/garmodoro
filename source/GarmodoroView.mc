@@ -58,7 +58,7 @@ class GarmodoroView extends Ui.View {
 		dc.setColor( Gfx.COLOR_TRANSPARENT, Gfx.COLOR_BLACK );
 		dc.clear();
 		if ( Pomodoro.isInBreakState() ) {
-			var labelForBreak = Pomodoro.isLongBreak2() ? 
+			var labelForBreak = Pomodoro.isLongBreak() ?
 						me.longBreakLabel : 
 						me.shortBreakLabel;
 			dc.setColor( Gfx.COLOR_GREEN, Gfx.COLOR_TRANSPARENT );

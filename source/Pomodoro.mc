@@ -88,11 +88,6 @@ module Pomodoro {
 					! isBreakTimerStarted;
 	}
 
-	// TODO: inline isLongBreak() and rename
-	function isLongBreak2() {
-		return isLongBreak();
-	}
-
 	function countdownMinutesInRunning() {
 		minutes -= 1;
 
@@ -103,9 +98,10 @@ module Pomodoro {
 			tickTimer.stop();
 			timer.stop();
 			isPomodoroTimerStarted = false;
-			minutes = App.getApp().getProperty( isLongBreak() ?
+			var breakVariant =  isLongBreak() ?
 						"longBreakLength" :
-						"shortBreakLength" );
+						"shortBreakLength";
+			minutes = App.getApp().getProperty( breakVariant );
 			var breakTimerRoutine =
 						new Lang.Method(Pomodoro, :countdownMinutesInBreak);
 			timer.start( breakTimerRoutine, 60 * 1000, true );
