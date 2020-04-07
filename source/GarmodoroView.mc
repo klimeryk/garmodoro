@@ -14,7 +14,6 @@ class GarmodoroView extends Ui.View {
 
 	// all elements are centered in X direction
 	hidden var centerX;
-	hidden var centerY;
 
 	// all offsets are in Y direction
 	hidden var pomodoroOffset;
@@ -27,36 +26,45 @@ class GarmodoroView extends Ui.View {
 		View.initialize();
 	}
 
-	function loadResources() {
+	hidden function loadResources() {
 		pomodoroSubtitle = Ui.loadResource( Rez.Strings.PomodoroSubtitle );
 		shortBreakLabel = Ui.loadResource( Rez.Strings.ShortBreakLabel );
 		longBreakLabel = Ui.loadResource( Rez.Strings.LongBreakLabel );
 		readyLabel = Ui.loadResource( Rez.Strings.ReadyLabel );
 	}
 
-	function calculateDrawingPositions() {
-		var height = dc.getHeight();
-		centerX = dc.getWidth() / 2;
-		centerY = height / 2;
+	hidden function calculateDrawingPositions() {
+		me.centerX = dc.getWidth() / 2;
 
-		var mediumOffset = Gfx.getFontHeight( Gfx.FONT_MEDIUM );
-		var mediumOffsetHalf = mediumOffset / 2;
-		var mildOffset = Gfx.getFontHeight( Gfx.FONT_NUMBER_MILD );
-		var screenShape = System.getDeviceSettings().screenShape;
-
-		me.timeOffset = height - mildOffset;
+		// offsets relative to the top and bottom of the watch face
 		me.pomodoroOffset = 5;
-		if ( System.SCREEN_SHAPE_RECTANGLE != screenShape ) {
-			me.pomodoroOffset += mediumOffset;
+
+		var heightOfFontMild = Gfx.getFontHeight( Gfx.FONT_NUMBER_MILD );
+		me.timeOffset = height - heightOfFontMild;
+
+		// offsets relative to the center
+		var centerY = dc.getHeight() / 2;
+		var heightOfFontLarge = Gfx.getFontHeight( Gfx.FONT_LARGE );
+		me.readyLabelOffset = me.centerY - heightOfFontLarge /2;
+
+		var heightOfFontHot = Gfx.getFontHeight( Gfx.FONT_NUMBER_THAI_HOT );
+		me.minutesOffset = me.centerY - heightOfFontHot / 2; 
+
+		var heightOfFontTiny = Gfx.getFontHeight( Gfx.FONT_TINY );
+		me.captionOffset = me.timeOffset - heightOfFontTiny;
+
+		me.adjustOffsetsForRoundScreen();
+	}
+
+	// 'special' case: non rectangular screens
+	hidden function adjustOffsetsForRoundScreen() {
+		var screenShape = System.getDeviceSettings().screenShape;
+		if ( screenShape != System.SCREEN_SHAPE_RECTANGLE ) {
+			var heightOfFontMedium = Gfx.getFontHeight( Gfx.FONT_MEDIUM );
+			me.pomodoroOffset += heightOfFontMedium;
+
 			me.timeOffset -= 5;
 		}
-
-		me.readyLabelOffset = me.centerY - 
-					( Gfx.getFontHeight( Gfx.FONT_LARGE ) / 2 );
-		me.minutesOffset = me.centerY - 
-					( Gfx.getFontHeight( Gfx.FONT_NUMBER_THAI_HOT ) / 2 );
-		me.captionOffset = me.timeOffset - 
-					Gfx.getFontHeight( Gfx.FONT_TINY );	
 	}
 
 	function onLayout( dc ) {
@@ -133,11 +141,11 @@ class GarmodoroView extends Ui.View {
 
 	hidden function drawTime( dc, foregroundColor ) {
 		dc.setColor( foregroundColor, Gfx.COLOR_TRANSPARENT );
-		dc.drawText( self.centerX, self.timeOffset, Gfx.FONT_NUMBER_MILD,
-					self.getTime(), Gfx.TEXT_JUSTIFY_CENTER );
+		dc.drawText( me.centerX, me.timeOffset, Gfx.FONT_NUMBER_MILD,
+					me.getTime(), Gfx.TEXT_JUSTIFY_CENTER );
 	}
 
-	function getTime() {
+	hidden function getTime() {
 		var today = Gregorian.info( Time.now(), Time.FORMAT_SHORT );
 		return Lang.format( "$1$:$2$", [
 			today.hour.format( "%02d" ),
