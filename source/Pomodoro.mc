@@ -19,13 +19,18 @@ module Pomodoro {
 	var currentState = stateReady;
 	var pomodoroIteration = 1;
 	var minutesLeft = 0;
+	// caching reduces battery load
+	var tickStrength;
+	var tickDuration;
 
 	// called when app is started for the first time
 	function initialize() {	
+		tickStrength = App.getApp().getProperty( "tickStrength" );
+		tickDuration = App.getApp().getProperty( "tickDuration" );
 		minuteTimer = new Timer.Timer();
 		tickTimer = new Timer.Timer();
 		// refreshes current time displayed on watch
-		beginCountdown();
+		beginMinuteCountdown();
 	}
 
 	function vibrate( dutyCycle, length ) {
@@ -105,30 +110,24 @@ module Pomodoro {
 
 		if ( minutesLeft == 0 ) {
 			if( isInRunningState() ) {
-				beginBreakState();
+				transitionToState( stateBreak );
 			} else if (isInBreakState()) {
-				beginReadyState();
+				transitionToState( stateReady );
 			} else {
-				// nothing in ready state
+				// nothing to do in ready state
 			}
 		}
 
 		Ui.requestUpdate();
 	}
 
-	function beginCountdown() {
+	function beginMinuteCountdown() {
 		var countdown = new Lang.Method(Pomodoro, :countdownMinutes);
 		minuteTimer.start( countdown, 60 * 1000, true );
 	}
 
-	function beginReadyState() {
-		transitionToState( stateReady );
-	}
-
 	function makeTickingSound() {
-		var strength = App.getApp().getProperty( "tickStrength" );
-		var duration = App.getApp().getProperty( "tickDuration" );
-		vibrate( strength, duration );
+		vibrate( tickStrength, tickDuration );
 	}
 
 	// one tick every second
@@ -139,25 +138,16 @@ module Pomodoro {
 		}
 	}
 
-	function beginRunningState() {
-		transitionToState( stateRunning );
-	}
-
-	function beginBreakState()
-	{
-		transitionToState( stateBreak );
-	}
-
 	function transitionToState( targetState ) {
 		stopTimers();
 		currentState = targetState;
-		
-		if(targetState == stateReady) {
+
+		if( targetState == stateReady ) {
 			playAttentionTone( 7 ); // Attention.TONE_INTERVAL_ALERT
 			vibrate( 100, 1500 );
 			currentState = stateReady;
 			pomodoroIteration += 1;
-		} else if(targetState== stateRunning) {
+		} else if( targetState== stateRunning ) {
 			playAttentionTone( 1 ); // Attention.TONE_START
 			vibrate( 75, 1500 );
 			currentState = stateRunning;
@@ -169,7 +159,7 @@ module Pomodoro {
 			currentState = stateBreak;
 			resetMinutesForBreak();
 		}
-		
-		beginCountdown();
+
+		beginMinuteCountdown();
 	}
 }
