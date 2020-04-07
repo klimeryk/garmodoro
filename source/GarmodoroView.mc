@@ -33,7 +33,7 @@ class GarmodoroView extends Ui.View {
 		readyLabel = Ui.loadResource( Rez.Strings.ReadyLabel );
 	}
 
-	hidden function calculateDrawingPositions() {
+	hidden function calculateDrawingPositions( dc ) {
 		me.centerX = dc.getWidth() / 2;
 
 		// offsets relative to the top and bottom of the watch face
@@ -48,7 +48,7 @@ class GarmodoroView extends Ui.View {
 		me.readyLabelOffset = me.centerY - heightOfFontLarge /2;
 
 		var heightOfFontHot = Gfx.getFontHeight( Gfx.FONT_NUMBER_THAI_HOT );
-		me.minutesOffset = me.centerY - heightOfFontHot / 2; 
+		me.minutesOffset = me.centerY - heightOfFontHot / 2;
 
 		var heightOfFontTiny = Gfx.getFontHeight( Gfx.FONT_TINY );
 		me.captionOffset = me.timeOffset - heightOfFontTiny;
@@ -68,9 +68,8 @@ class GarmodoroView extends Ui.View {
 	}
 
 	function onLayout( dc ) {
-		// TODO can we move these to initialize() ?
 		me.loadResources();
-		me.calculateDrawingPositions();
+		me.calculateDrawingPositions( dc );
 	}
 
 	function onShow() {
