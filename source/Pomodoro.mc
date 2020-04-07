@@ -8,16 +8,17 @@ using Toybox.Lang as Lang;
 
 // acts a a singleton, hence no class
 module Pomodoro {
-	var timer;
+	var minuteTimer;
 	var tickTimer;
-	var minutes = 0;
+	var minutesLeft = 0;
 	var pomodoroNumber = 1;
+	// TODO: represent pomodoro state in one variable
 	var isPomodoroTimerStarted = false;
 	var isBreakTimerStarted = false;
 
 	// called when app is started for the first time
 	function initialize() {	
-		timer = new Timer.Timer();
+		minuteTimer = new Timer.Timer();
 		tickTimer = new Timer.Timer();
 	}
 
@@ -36,14 +37,19 @@ module Pomodoro {
 	}
 
 	function resetMinutesForPomodoro() {
-		minutes = App.getApp().getProperty( "pomodoroLength" );
+		minutesLeft = App.getApp().getProperty( "pomodoroLength" );
+	}
+
+	function isLongBreak() {
+		var groupLength = App.getApp().getProperty( "numberOfPomodorosBeforeLongBreak" );
+		return ( pomodoroNumber % groupLength ) == 0;
 	}
 
 	function resetMinutesForBreak() {
 		var breakVariant =  isLongBreak() ?
 					"longBreakLength" :
 					"shortBreakLength";
-		minutes = App.getApp().getProperty( breakVariant );
+		minutesLeft = App.getApp().getProperty( breakVariant );
 	}
 
 	function shouldTick() {
@@ -52,7 +58,7 @@ module Pomodoro {
 
 	// for displaying
 	function getMinutesLeft() {
-		return minutes;
+		return minutesLeft;
 	}
 
 	// for displaying
@@ -75,10 +81,10 @@ module Pomodoro {
 
 	function stopTimers() {
 		tickTimer.stop();
-		timer.stop();
+		minuteTimer.stop();
 	}
 
-	// called when "reset" action is selected in menu
+	// called on reset action in stop menu
 	function resetFromMenu() {
 		playAttentionTone( 9 ); // Attention.TONE_RESET
 		vibrate( 50, 1500 );
@@ -91,9 +97,9 @@ module Pomodoro {
 	}
 
 	function countdownMinutes() {
-		minutes -= 1;
+		minutesLeft -= 1;
 
-		if ( minutes == 0 ) {
+		if ( minutesLeft == 0 ) {
 			if( isInRunningState() ) {
 				beginBreakCountdown();
 			} else if (isInBreakState()) {
@@ -107,22 +113,17 @@ module Pomodoro {
 	}
 
 	function beginCountdown() {
-		var timerRoutine =
-					new Lang.Method(Pomodoro, :countdownMinutes);
-		timer.start( timerRoutine, 60 * 1000, true );
+		var countdown = new Lang.Method(Pomodoro, :countdownMinutes);
+		minuteTimer.start( countdown, 60 * 1000, true );
 	}
 
 	function beginReadyState() {
 		playAttentionTone( 7 ); // Attention.TONE_INTERVAL_ALERT
 		vibrate( 100, 1500 );
-		timer.stop();
+		// FIXME: time display will freeze, if minuteTimer is stopped
+		minuteTimer.stop();
 		isBreakTimerStarted = false;
 		pomodoroNumber += 1;
-	}
-
-	function isLongBreak() {
-		var groupLength = App.getApp().getProperty( "numberOfPomodorosBeforeLongBreak" );
-		return ( pomodoroNumber % groupLength ) == 0;
 	}
 
 	function makeTickingSound() {
@@ -134,9 +135,8 @@ module Pomodoro {
 	// one tick every second
 	function beginTickingIfEnabled() {
 		if ( shouldTick() ) {
-			var tickTimerRoutine =
-						new Lang.Method(Pomodoro, :makeTickingSound);
-			tickTimer.start( tickTimerRoutine, 1000, true );
+			var makeTick = new Lang.Method(Pomodoro, :makeTickingSound);
+			tickTimer.start( makeTick, 1000, true );
 		}
 	}
 
