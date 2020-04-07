@@ -12,9 +12,11 @@ class GarmodoroView extends Ui.View {
 	hidden var longBreakLabel;
 	hidden var readyLabel;
 
+	// all elements are centered in X direction
 	hidden var centerX;
 	hidden var centerY;
 
+	// all offsets are in Y direction
 	hidden var pomodoroOffset;
 	hidden var captionOffset;
 	hidden var readyLabelOffset;
@@ -25,15 +27,18 @@ class GarmodoroView extends Ui.View {
 		View.initialize();
 	}
 
-	function onLayout( dc ) {
+	function loadResources() {
 		pomodoroSubtitle = Ui.loadResource( Rez.Strings.PomodoroSubtitle );
 		shortBreakLabel = Ui.loadResource( Rez.Strings.ShortBreakLabel );
 		longBreakLabel = Ui.loadResource( Rez.Strings.LongBreakLabel );
 		readyLabel = Ui.loadResource( Rez.Strings.ReadyLabel );
+	}
 
+	function calculateDrawingPositions() {
 		var height = dc.getHeight();
 		centerX = dc.getWidth() / 2;
 		centerY = height / 2;
+
 		var mediumOffset = Gfx.getFontHeight( Gfx.FONT_MEDIUM );
 		var mediumOffsetHalf = mediumOffset / 2;
 		var mildOffset = Gfx.getFontHeight( Gfx.FONT_NUMBER_MILD );
@@ -46,61 +51,90 @@ class GarmodoroView extends Ui.View {
 			me.timeOffset -= 5;
 		}
 
-		me.readyLabelOffset = me.centerY - ( Gfx.getFontHeight( Gfx.FONT_LARGE ) / 2 );
-		me.minutesOffset = me.centerY - ( Gfx.getFontHeight( Gfx.FONT_NUMBER_THAI_HOT ) / 2 );
-		me.captionOffset = me.timeOffset - Gfx.getFontHeight( Gfx.FONT_TINY );	
+		me.readyLabelOffset = me.centerY - 
+					( Gfx.getFontHeight( Gfx.FONT_LARGE ) / 2 );
+		me.minutesOffset = me.centerY - 
+					( Gfx.getFontHeight( Gfx.FONT_NUMBER_THAI_HOT ) / 2 );
+		me.captionOffset = me.timeOffset - 
+					Gfx.getFontHeight( Gfx.FONT_TINY );	
+	}
+
+	function onLayout( dc ) {
+		// TODO can we move these to initialize() ?
+		me.loadResources();
+		me.calculateDrawingPositions();
 	}
 
 	function onShow() {
 	}
 
+	function onHide() {
+	}
+
 	function onUpdate( dc ) {
-		dc.setColor( Gfx.COLOR_TRANSPARENT, Gfx.COLOR_BLACK );
-		dc.clear();
+		me.drawBackground( dc, Gfx.COLOR_BLACK );
+
 		if ( Pomodoro.isInBreakState() ) {
-			var labelForBreak = Pomodoro.isLongBreak() ?
-						me.longBreakLabel : 
-						me.shortBreakLabel;
-			dc.setColor( Gfx.COLOR_GREEN, Gfx.COLOR_TRANSPARENT );
-			dc.drawText( me.centerX, me.pomodoroOffset, Gfx.FONT_MEDIUM, 
-						labelForBreak, Gfx.TEXT_JUSTIFY_CENTER );
-			me.drawMinutes( dc );
-
-			dc.setColor( Gfx.COLOR_DK_GREEN, Gfx.COLOR_TRANSPARENT );
-			me.drawCaption( dc );
+			me.drawBreakLabel( dc, Gfx.COLOR_GREEN );
+			me.drawMinutes( dc, Gfx.COLOR_GREEN );
+			me.drawCaption( dc, Gfx.COLOR_DK_GREEN );
 		} else if ( Pomodoro.isInRunningState() ) {
-			dc.setColor( Gfx.COLOR_YELLOW, Gfx.COLOR_TRANSPARENT );
-			me.drawMinutes( dc );
-			dc.setColor( Gfx.COLOR_ORANGE, Gfx.COLOR_TRANSPARENT );
-			me.drawCaption( dc );
+			me.drawPomodoroLabel( dc, Gfx.COLOR_LT_GRAY );
+			me.drawMinutes( dc, Gfx.COLOR_YELLOW );
+			me.drawCaption( dc, Gfx.COLOR_ORANGE );
 		} else { // Pomodoro is in ready state
-			dc.setColor( Gfx.COLOR_ORANGE, Gfx.COLOR_TRANSPARENT );
-			dc.drawText( me.centerX, me.readyLabelOffset, Gfx.FONT_LARGE,
-						me.readyLabel, Gfx.TEXT_JUSTIFY_CENTER );
+			me.drawPomodoroLabel( dc, Gfx.COLOR_LT_GRAY );
+			me.drawReadyLabel( dc, Gfx.COLOR_ORANGE );
 		}
 
-		if ( ! Pomodoro.isInBreakState() ) {
-			dc.setColor( Gfx.COLOR_LT_GRAY, Gfx.COLOR_TRANSPARENT );
-			dc.drawText( me.centerX, me.pomodoroOffset, Gfx.FONT_MEDIUM, "Pomodoro #" + 
-						Pomodoro.getIteration(), Gfx.TEXT_JUSTIFY_CENTER );
-		}
-
-		dc.setColor( Gfx.COLOR_LT_GRAY, Gfx.COLOR_TRANSPARENT );
-		dc.drawText( self.centerX, self.timeOffset, Gfx.FONT_NUMBER_MILD, 
-					self.getTime(), Gfx.TEXT_JUSTIFY_CENTER );
+		drawTime( dc, Gfx.COLOR_LT_GRAY );
 	}
 
-	hidden function drawMinutes( dc ) {
+	hidden function drawBackground( dc, backgroundColor ) {
+		dc.setColor( Gfx.COLOR_TRANSPARENT, backgroundColor );
+		dc.clear();
+	}
+
+	hidden function drawPomodoroLabel( dc, foregroundColor ) {
+		var pomodoroLabel = "Pomodoro #" + Pomodoro.getIteration();
+		dc.setColor( foregroundColor, Gfx.COLOR_TRANSPARENT );
+		dc.drawText( me.centerX, me.pomodoroOffset, Gfx.FONT_MEDIUM,
+					pomodoroLabel, Gfx.TEXT_JUSTIFY_CENTER );
+	}
+
+	hidden function drawBreakLabel( dc, foregroundColor ) {
+		var labelForBreak = Pomodoro.isLongBreak() ?
+					me.longBreakLabel :
+					me.shortBreakLabel;
+		dc.setColor( foregroundColor, Gfx.COLOR_TRANSPARENT );
+		dc.drawText( me.centerX, me.pomodoroOffset, Gfx.FONT_MEDIUM,
+					labelForBreak, Gfx.TEXT_JUSTIFY_CENTER );
+	}
+
+	hidden function drawReadyLabel( dc, foregroundColor ) {
+		dc.setColor( foregroundColor, Gfx.COLOR_TRANSPARENT );
+		dc.drawText( me.centerX, me.readyLabelOffset, Gfx.FONT_LARGE,
+					me.readyLabel, Gfx.TEXT_JUSTIFY_CENTER );
+	}
+
+	hidden function drawMinutes( dc, foregroundColor ) {
+		// TODO inline format() in getMinutesLeft()
+		var minutesAsText = Pomodoro.getMinutesLeft().format( "%02d" );
+		dc.setColor( foregroundColor, Gfx.COLOR_TRANSPARENT );
 		dc.drawText( me.centerX, me.minutesOffset, Gfx.FONT_NUMBER_THAI_HOT, 
-					Pomodoro.getMinutesLeft().format( "%02d" ), Gfx.TEXT_JUSTIFY_CENTER );
+					minutesAsText, Gfx.TEXT_JUSTIFY_CENTER );
 	}
 
-	hidden function drawCaption( dc ) {
+	hidden function drawCaption( dc, foregroundColor ) {
+		dc.setColor( foregroundColor, Gfx.COLOR_TRANSPARENT );
 		dc.drawText( me.centerX, me.captionOffset, Gfx.FONT_TINY, 
 					me.pomodoroSubtitle, Gfx.TEXT_JUSTIFY_CENTER );
 	}
 
-	function onHide() {
+	hidden function drawTime( dc, foregroundColor ) {
+		dc.setColor( foregroundColor, Gfx.COLOR_TRANSPARENT );
+		dc.drawText( self.centerX, self.timeOffset, Gfx.FONT_NUMBER_MILD,
+					self.getTime(), Gfx.TEXT_JUSTIFY_CENTER );
 	}
 
 	function getTime() {
