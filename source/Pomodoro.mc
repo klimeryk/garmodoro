@@ -109,7 +109,7 @@ module Pomodoro {
 			} else if (isInBreakState()) {
 				beginReadyState();
 			} else {
-				// will never be called in ready state
+				// nothing in ready state
 			}
 		}
 
@@ -122,12 +122,7 @@ module Pomodoro {
 	}
 
 	function beginReadyState() {
-		playAttentionTone( 7 ); // Attention.TONE_INTERVAL_ALERT
-		vibrate( 100, 1500 );
-		stopTimers();
-		currentState = stateReady;
-		pomodoroIteration += 1;
-		beginCountdown();
+		transitionToState( stateReady );
 	}
 
 	function makeTickingSound() {
@@ -145,24 +140,36 @@ module Pomodoro {
 	}
 
 	function beginRunningState() {
-		playAttentionTone( 1 ); // Attention.TONE_START
-		vibrate( 75, 1500 );
-
-		stopTimers();
-		currentState = stateRunning;
-		resetMinutesForPomodoro();
-		beginCountdown();
-		beginTickingIfEnabled();
+		transitionToState( stateRunning );
 	}
 
 	function beginBreakState()
 	{
-		playAttentionTone( 10 ); // Attention.TONE_LAP
-		vibrate( 100, 1500 );
+		transitionToState( stateBreak );
+	}
 
+	function transitionToState( targetState ) {
 		stopTimers();
-		currentState = stateBreak;
-		resetMinutesForBreak();
+		currentState = targetState;
+		
+		if(targetState == stateReady) {
+			playAttentionTone( 7 ); // Attention.TONE_INTERVAL_ALERT
+			vibrate( 100, 1500 );
+			currentState = stateReady;
+			pomodoroIteration += 1;
+		} else if(targetState== stateRunning) {
+			playAttentionTone( 1 ); // Attention.TONE_START
+			vibrate( 75, 1500 );
+			currentState = stateRunning;
+			resetMinutesForPomodoro();
+			beginTickingIfEnabled();
+		} else { // targetState == stateBreak
+			playAttentionTone( 10 ); // Attention.TONE_LAP
+			vibrate( 100, 1500 );
+			currentState = stateBreak;
+			resetMinutesForBreak();
+		}
+		
 		beginCountdown();
 	}
 }
