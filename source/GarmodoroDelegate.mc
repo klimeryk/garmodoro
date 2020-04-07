@@ -14,7 +14,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 
 	function onSelect() {
 		if ( Pomodoro.isInReadyState() ) {
-			Pomodoro.beginPomodoroCountdown();
+			Pomodoro.beginRunningState();
 			Ui.requestUpdate();
 		} else { // pomodoro is in running or break state
 			displayStopMenu();

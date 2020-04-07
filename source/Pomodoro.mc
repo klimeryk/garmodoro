@@ -10,16 +10,22 @@ using Toybox.Lang as Lang;
 module Pomodoro {
 	var minuteTimer;
 	var tickTimer;
+	// pomodoro states: ready -> running -> break -> ready ...
+	enum {
+		stateReady,
+		stateRunning,
+		stateBreak
+	}
+	var currentState = stateReady;
+	var pomodoroIteration = 1;
 	var minutesLeft = 0;
-	var pomodoroNumber = 1;
-	// TODO: represent pomodoro state in one variable
-	var isPomodoroTimerStarted = false;
-	var isBreakTimerStarted = false;
 
 	// called when app is started for the first time
 	function initialize() {	
 		minuteTimer = new Timer.Timer();
 		tickTimer = new Timer.Timer();
+		// refreshes current time displayed on watch
+		beginCountdown();
 	}
 
 	function vibrate( dutyCycle, length ) {
@@ -42,7 +48,7 @@ module Pomodoro {
 
 	function isLongBreak() {
 		var groupLength = App.getApp().getProperty( "numberOfPomodorosBeforeLongBreak" );
-		return ( pomodoroNumber % groupLength ) == 0;
+		return ( pomodoroIteration % groupLength ) == 0;
 	}
 
 	function resetMinutesForBreak() {
@@ -58,25 +64,24 @@ module Pomodoro {
 
 	// for displaying
 	function getMinutesLeft() {
-		return minutesLeft;
+		return minutesLeft.format( "%02d" );
 	}
 
 	// for displaying
 	function getIteration() {
-		return pomodoroNumber;
+		return pomodoroIteration;
 	}
 
 	function isInBreakState() {
-		return isBreakTimerStarted;
+		return currentState == stateBreak;
 	}
 
 	function isInRunningState() {
-		return isPomodoroTimerStarted;
+		return currentState == stateRunning;
 	}
 
 	function isInReadyState() {
-		return ! isPomodoroTimerStarted && 
-					! isBreakTimerStarted;
+		return currentState == stateReady;
 	}
 
 	function stopTimers() {
@@ -91,9 +96,8 @@ module Pomodoro {
 
 		stopTimers();
 		resetMinutesForPomodoro();
-		pomodoroNumber = 1;
-		isPomodoroTimerStarted = false;
-		isBreakTimerStarted = false;
+		pomodoroIteration = 1;
+		currentState = stateReady;
 	}
 
 	function countdownMinutes() {
@@ -101,7 +105,7 @@ module Pomodoro {
 
 		if ( minutesLeft == 0 ) {
 			if( isInRunningState() ) {
-				beginBreakCountdown();
+				beginBreakState();
 			} else if (isInBreakState()) {
 				beginReadyState();
 			} else {
@@ -120,10 +124,10 @@ module Pomodoro {
 	function beginReadyState() {
 		playAttentionTone( 7 ); // Attention.TONE_INTERVAL_ALERT
 		vibrate( 100, 1500 );
-		// FIXME: time display will freeze, if minuteTimer is stopped
-		minuteTimer.stop();
-		isBreakTimerStarted = false;
-		pomodoroNumber += 1;
+		stopTimers();
+		currentState = stateReady;
+		pomodoroIteration += 1;
+		beginCountdown();
 	}
 
 	function makeTickingSound() {
@@ -140,25 +144,25 @@ module Pomodoro {
 		}
 	}
 
-	function beginPomodoroCountdown() {
+	function beginRunningState() {
 		playAttentionTone( 1 ); // Attention.TONE_START
 		vibrate( 75, 1500 );
 
+		stopTimers();
+		currentState = stateRunning;
 		resetMinutesForPomodoro();
 		beginCountdown();
-		isPomodoroTimerStarted = true;
 		beginTickingIfEnabled();
 	}
 
-	function beginBreakCountdown()
+	function beginBreakState()
 	{
 		playAttentionTone( 10 ); // Attention.TONE_LAP
 		vibrate( 100, 1500 );
 
 		stopTimers();
-		isPomodoroTimerStarted = false;
+		currentState = stateBreak;
 		resetMinutesForBreak();
 		beginCountdown();
-		isBreakTimerStarted = true;
 	}
 }

@@ -45,10 +45,10 @@ class GarmodoroView extends Ui.View {
 		// offsets relative to the center
 		var centerY = dc.getHeight() / 2;
 		var heightOfFontLarge = Gfx.getFontHeight( Gfx.FONT_LARGE );
-		me.readyLabelOffset = me.centerY - heightOfFontLarge /2;
+		me.readyLabelOffset = centerY - heightOfFontLarge /2;
 
 		var heightOfFontHot = Gfx.getFontHeight( Gfx.FONT_NUMBER_THAI_HOT );
-		me.minutesOffset = me.centerY - heightOfFontHot / 2;
+		me.minutesOffset = centerY - heightOfFontHot / 2;
 
 		var heightOfFontTiny = Gfx.getFontHeight( Gfx.FONT_TINY );
 		me.captionOffset = me.timeOffset - heightOfFontTiny;
@@ -69,7 +69,7 @@ class GarmodoroView extends Ui.View {
 
 	function onLayout( dc ) {
 		me.loadResources();
-		me.calculateDrawingPositions( dc );
+		me.calculateDrawingPositions( dc );		
 	}
 
 	function onShow() {
@@ -125,8 +125,7 @@ class GarmodoroView extends Ui.View {
 	}
 
 	hidden function drawMinutes( dc, foregroundColor ) {
-		// TODO inline format() in getMinutesLeft()
-		var minutesAsText = Pomodoro.getMinutesLeft().format( "%02d" );
+		var minutesAsText = Pomodoro.getMinutesLeft();
 		dc.setColor( foregroundColor, Gfx.COLOR_TRANSPARENT );
 		dc.drawText( me.centerX, me.minutesOffset, Gfx.FONT_NUMBER_THAI_HOT, 
 					minutesAsText, Gfx.TEXT_JUSTIFY_CENTER );
