@@ -8,7 +8,13 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 	}
 
 	function onBack() {
-		Ui.popView( Ui.SLIDE_RIGHT );
+		if( Pomodoro.isInReadyState() ) {
+			// exits application
+			Ui.popView( Ui.SLIDE_RIGHT );
+		} else {
+			// asks again, prevents inadvertent exit
+			onMenu();
+		}
 		return true;
 	}
 
@@ -30,7 +36,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 		return true;
 	}
 
-	// also called from onSelect() when Pomodoro running or in break
+	// also called from onSelect() and onBack()
 	function onMenu() {
 		Ui.pushView( new Rez.Menus.StopMenu(),
 					new StopMenuDelegate(), Ui.SLIDE_UP );
