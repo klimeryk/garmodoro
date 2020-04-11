@@ -17,12 +17,10 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 			Pomodoro.transitionToState( Pomodoro.stateRunning );
 			Ui.requestUpdate();
 		} else { // pomodoro is in running or break state
-			displayStopMenu();
+			onMenu();
 		}
 		return true;
 	}
-
-	// TODO: add onMenu() if supported on all watches
 
 	function onNextMode() {
 		return true;
@@ -32,8 +30,10 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 		return true;
 	}
 
-	function displayStopMenu() {
+	// also called from onSelect() when Pomodoro running or in break
+	function onMenu() {
 		Ui.pushView( new Rez.Menus.StopMenu(),
 					new StopMenuDelegate(), Ui.SLIDE_UP );
+		return true;
 	}
 }

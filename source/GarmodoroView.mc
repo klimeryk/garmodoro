@@ -40,7 +40,7 @@ class GarmodoroView extends Ui.View {
 		me.pomodoroOffset = 5;
 
 		var heightOfFontMild = Gfx.getFontHeight( Gfx.FONT_NUMBER_MILD );
-		me.timeOffset = height - heightOfFontMild;
+		me.timeOffset = dc.getHeight() - heightOfFontMild;
 
 		// offsets relative to the center
 		var centerY = dc.getHeight() / 2;
@@ -94,7 +94,7 @@ class GarmodoroView extends Ui.View {
 			me.drawReadyLabel( dc, Gfx.COLOR_ORANGE );
 		}
 
-		drawTime( dc, Gfx.COLOR_LT_GRAY );
+		me.drawTime( dc, Gfx.COLOR_LT_GRAY );
 	}
 
 	hidden function drawBackground( dc, backgroundColor ) {
@@ -146,8 +146,8 @@ class GarmodoroView extends Ui.View {
 	hidden function getTime() {
 		var today = Gregorian.info( Time.now(), Time.FORMAT_SHORT );
 		return Lang.format( "$1$:$2$", [
-			today.hour.format( "%02d" ),
-			today.min.format( "%02d" ),
-		] );
+					today.hour.format( "%02d" ),
+					today.min.format( "%02d" ),
+					] );
 	}
 }
