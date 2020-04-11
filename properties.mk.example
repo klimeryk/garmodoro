@@ -1,0 +1,4 @@
+DEVICE = fr945
+SDK_HOME = /home/tgr/garmin/ConnectIq
+DEPLOY = /dev/null
+PRIVATE_KEY = ./developer_key.der
