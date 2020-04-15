@@ -2,3 +2,5 @@
 .settings
 
 *.swp
+developer_key.*
+properties.mk

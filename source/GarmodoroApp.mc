@@ -1,20 +1,18 @@
 using Toybox.Application as App;
-using Toybox.Timer as Timer;
+using Pomodoro;
 
 class GarmodoroApp extends App.AppBase {
 
 	function initialize() {
 		AppBase.initialize();
+		Pomodoro.initialize();
 	}
 
 	function onStart(state) {
-		timer = new Timer.Timer();
-		tickTimer = new Timer.Timer();
 	}
 
 	function onStop(state) {
-		tickTimer.stop();
-		timer.stop();
+		Pomodoro.stopTimers();
 	}
 
 	function getInitialView() {

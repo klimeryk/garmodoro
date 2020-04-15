@@ -18,6 +18,7 @@ Pomodoro for Garmin devices using Connect IQ
 ## Development
 
 To run the project, you can either import the project into Eclipse the usual way. Or use the `Makefile`:
+ * Copy `properties.mk.example` to `properties.mk`
  * Edit `properties.mk` file and make sure the paths there are valid on your computer. Change the `DEVICE` variable if you want/need.
  * Run `make run` to build the project and run the Connect IQ simulator on the chosen `DEVICE`.
 

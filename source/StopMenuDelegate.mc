@@ -1,6 +1,7 @@
 using Toybox.Attention as Attention;
 using Toybox.System as System;
 using Toybox.WatchUi as Ui;
+using Pomodoro;
 
 class StopMenuDelegate extends Ui.MenuInputDelegate {
 	function initialize() {
@@ -9,16 +10,7 @@ class StopMenuDelegate extends Ui.MenuInputDelegate {
 
 	function onMenuItem( item ) {
 		if ( item == :restart ) {
-			play( 9 ); // Attention.TONE_RESET
-			ping( 50, 1500 );
-
-			tickTimer.stop();
-			timer.stop();
-
-			resetMinutes();
-			pomodoroNumber = 1;
-			isPomodoroTimerStarted = false;
-			isBreakTimerStarted = false;
+			Pomodoro.resetFromMenu();
 
 			Ui.requestUpdate();
 		} else if ( item == :exit ) {
