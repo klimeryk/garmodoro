@@ -32,6 +32,7 @@ function resetMinutes() {
 class GarmodoroDelegate extends Ui.BehaviorDelegate {
 	function initialize() {
 		Ui.BehaviorDelegate.initialize();
+		timer.start( method( :idleCallback ), 60 * 1000, true );
 	}
 
 	function pomodoroCallback() {
@@ -63,8 +64,13 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 			isBreakTimerStarted = false;
 			pomodoroNumber += 1;
 			resetMinutes();
+			timer.start( method( :idleCallback ), 60 * 1000, true );
 		}
 
+		Ui.requestUpdate();
+	}
+
+	function idleCallback() {
 		Ui.requestUpdate();
 	}
 
@@ -97,6 +103,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 
 		play( 1 ); // Attention.TONE_START
 		ping( 75, 1500 );
+		timer.stop();
 		resetMinutes();
 		timer.start( method( :pomodoroCallback ), 60 * 1000, true );
 		if ( me.shouldTick() ) {
