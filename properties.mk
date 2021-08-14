@@ -1,4 +1,4 @@
 DEVICE = fenix3_hr
-SDK_HOME = /Users/klimeryk/work/connectiq/tools/connectiq-sdk-mac
+SDK_HOME = /Users/klimeryk/work/tools/connectiq-sdk-mac
 DEPLOY = /Volumes/GARMIN/GARMIN/APPS/
-PRIVATE_KEY = /Users/klimeryk/work/connectiq/tools/developer_key.der
+PRIVATE_KEY = /Users/klimeryk/work/tools/connectiq/developer_key.der
