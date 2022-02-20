@@ -17,6 +17,9 @@
 	<setting propertyKey="@Properties.tickDuration" title="@Strings.TickDuration">
 		<settingConfig type="numeric" min="80" max="1000" />
 	</setting>
+	<setting propertyKey="@Properties.tickFrequency" title="@Strings.TickFrequency">
+		<settingConfig type="numeric" min="1" max="3600" />
+	</setting>
 	<setting propertyKey="@Properties.muteSounds" title="@Strings.MuteSounds">
 		<settingConfig type="boolean" />
 	</setting>

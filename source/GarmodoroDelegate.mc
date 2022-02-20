@@ -100,7 +100,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 		resetMinutes();
 		timer.start( method( :pomodoroCallback ), 60 * 1000, true );
 		if ( me.shouldTick() ) {
-			tickTimer.start( method( :tickCallback ), 1000, true );
+			tickTimer.start( method( :tickCallback ), App.getApp().getProperty( "tickFrequency" ) * 1000, true );
 		}
 		isPomodoroTimerStarted = true;
 
