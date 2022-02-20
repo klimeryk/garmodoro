@@ -47,7 +47,7 @@ class GarmodoroView extends Ui.View {
 
 		me.readyLabelOffset = me.centerY - ( Gfx.getFontHeight( Gfx.FONT_LARGE ) / 2 );
 		me.minutesOffset = me.centerY - ( Gfx.getFontHeight( Gfx.FONT_NUMBER_THAI_HOT ) / 2 );
-		me.captionOffset = me.timeOffset - Gfx.getFontHeight( Gfx.FONT_TINY );	
+		me.captionOffset = me.timeOffset - Gfx.getFontHeight( Gfx.FONT_TINY );
 	}
 
 	function onShow() {
