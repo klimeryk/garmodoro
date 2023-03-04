@@ -34,7 +34,6 @@ class GarmodoroView extends Ui.View {
 		centerX = dc.getWidth() / 2;
 		centerY = height / 2;
 		var mediumOffset = Gfx.getFontHeight( Gfx.FONT_MEDIUM );
-		var mediumOffsetHalf = mediumOffset / 2;
 		var mildOffset = Gfx.getFontHeight( Gfx.FONT_NUMBER_MILD );
 		var screenShape = System.getDeviceSettings().screenShape;
 
