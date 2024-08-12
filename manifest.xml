@@ -32,6 +32,7 @@
             <iq:product id="edge1030bontrager"/>
             <iq:product id="edge1030plus"/>
             <iq:product id="edge1040"/>
+            <iq:product id="edge1050"/>
             <iq:product id="edge_520"/>
             <iq:product id="edge_1000"/>
             <iq:product id="edgeexplore"/>
@@ -65,6 +66,8 @@
             <iq:product id="fenix7xpronowifi"/>
             <iq:product id="fenixchronos"/>
             <iq:product id="fr55"/>
+            <iq:product id="fr165"/>
+            <iq:product id="fr165m"/>
             <iq:product id="fr230"/>
             <iq:product id="fr235"/>
             <iq:product id="fr245"/>
