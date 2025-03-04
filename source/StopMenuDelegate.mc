@@ -16,10 +16,13 @@ class StopMenuDelegate extends Ui.MenuInputDelegate {
 			timer.stop();
 
 			resetMinutes();
-			pomodoroNumber = 1;
-			isPomodoroTimerStarted = false;
-			isBreakTimerStarted = false;
-			timer.start( method( :idleCallback ), 60 * 1000, true );
+			setStorageValue(POMODORO_TIMER_STARTED_PROPERTY_STORAGE_KEY, false);
+			setStorageValue(BREAK_TIMER_STARTED_PROPERTY_STORAGE_KEY, false);
+			setStorageValue(POMODORO_NUMBER_PROPERTY_STORAGE_KEY, 1);
+
+			setEndTimeBySeconds(null);
+			Background.deleteTemporalEvent();			
+			timer.start( method( :idleCallback ), 10 * 1000, true );
 
 			Ui.requestUpdate();
 		} else if ( item == :exit ) {

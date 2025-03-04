@@ -22,19 +22,19 @@
             <iq:product id="descentmk2s"/>
             <iq:product id="descentmk343mm"/>
             <iq:product id="descentmk351mm"/>
+            <iq:product id="edge1030"/>
+            <iq:product id="edge1030bontrager"/>
+            <iq:product id="edge1030plus"/>
+            <iq:product id="edge1040"/>
+            <iq:product id="edge1050"/>
             <iq:product id="edge520plus"/>
             <iq:product id="edge530"/>
             <iq:product id="edge540"/>
             <iq:product id="edge820"/>
             <iq:product id="edge830"/>
             <iq:product id="edge840"/>
-            <iq:product id="edge1030"/>
-            <iq:product id="edge1030bontrager"/>
-            <iq:product id="edge1030plus"/>
-            <iq:product id="edge1040"/>
-            <iq:product id="edge1050"/>
-            <iq:product id="edge_520"/>
             <iq:product id="edge_1000"/>
+            <iq:product id="edge_520"/>
             <iq:product id="edgeexplore"/>
             <iq:product id="edgeexplore2"/>
             <iq:product id="enduro"/>
@@ -65,13 +65,12 @@
             <iq:product id="fenix7x"/>
             <iq:product id="fenix7xpro"/>
             <iq:product id="fenix7xpronowifi"/>
-            <iq:product id="fenix8solar47mm"/>
-            <iq:product id="fenix8solar51mm"/>
             <iq:product id="fenix843mm"/>
             <iq:product id="fenix847mm"/>
+            <iq:product id="fenix8solar47mm"/>
+            <iq:product id="fenix8solar51mm"/>
             <iq:product id="fenixchronos"/>
             <iq:product id="fenixe"/>
-            <iq:product id="fr55"/>
             <iq:product id="fr165"/>
             <iq:product id="fr165m"/>
             <iq:product id="fr230"/>
@@ -84,6 +83,7 @@
             <iq:product id="fr255sm"/>
             <iq:product id="fr265"/>
             <iq:product id="fr265s"/>
+            <iq:product id="fr55"/>
             <iq:product id="fr630"/>
             <iq:product id="fr645"/>
             <iq:product id="fr645m"/>
@@ -139,7 +139,9 @@
             <iq:product id="vivoactive5"/>
             <iq:product id="vivoactive_hr"/>
         </iq:products>
-        <iq:permissions/>
+        <iq:permissions>
+            <iq:uses-permission id="Background"/>
+        </iq:permissions>
         <iq:languages>
             <iq:language>eng</iq:language>
             <iq:language>pol</iq:language>

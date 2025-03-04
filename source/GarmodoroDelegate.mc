@@ -1,13 +1,11 @@
 using Toybox.Application as App;
 using Toybox.Attention as Attention;
 using Toybox.WatchUi as Ui;
+using Toybox.System;
+
 
 var timer;
 var tickTimer;
-var minutes = 0;
-var pomodoroNumber = 1;
-var isPomodoroTimerStarted = false;
-var isBreakTimerStarted = false;
 
 function ping( dutyCycle, length ) {
 	if ( Attention has :vibrate ) {
@@ -26,49 +24,69 @@ function idleCallback() {
 }
 
 function isLongBreak() {
-	return ( pomodoroNumber % App.getApp().getProperty( "numberOfPomodorosBeforeLongBreak" ) ) == 0;
+  var pomodoroNumber = getStorageValue(POMODORO_NUMBER_PROPERTY_STORAGE_KEY, 1);
+  return (
+    pomodoroNumber %
+      App.getApp().getProperty("numberOfPomodorosBeforeLongBreak") ==
+    0
+  );
 }
 
 function resetMinutes() {
-	minutes = App.getApp().getProperty( "pomodoroLength" );
+  var minutes = App.getApp().getProperty("pomodoroLength");
+  var minutesAsSeconds = minutes * 60;
+  setEndTimeBySeconds(minutesAsSeconds);
 }
 
 class GarmodoroDelegate extends Ui.BehaviorDelegate {
 	function initialize() {
+		timer = new Timer.Timer();
+    	tickTimer = new Timer.Timer();
 		Ui.BehaviorDelegate.initialize();
-		timer.start( method( :idleCallback ), 60 * 1000, true );
+		timer.start( method( :idleCallback ), 10 * 1000, true );
+		var isPomodoroTimerStarted = getStorageValue(POMODORO_TIMER_STARTED_PROPERTY_STORAGE_KEY, false);
+		var isBreakTimerStarted = getStorageValue(BREAK_TIMER_STARTED_PROPERTY_STORAGE_KEY, false);
+
+		if(isPomodoroTimerStarted){
+			pomodoroCallback();
+		}
+
+		if(isBreakTimerStarted){
+			breakCallback();
+		}
 	}
 
-	function pomodoroCallback() {
-		minutes -= 1;
-
-		if ( minutes == 0 ) {
+	function pomodoroCallback() {	
+		var seconds = getSeconds();
+		if (seconds <= 0 ) {
 			play( 10 ); // Attention.TONE_LAP
 			ping( 100, 1500 );
 			tickTimer.stop();
 			timer.stop();
-			isPomodoroTimerStarted = false;
-			minutes = App.getApp().getProperty( isLongBreak() ? "longBreakLength" : "shortBreakLength" );
-
-			timer.start( method( :breakCallback ), 60 * 1000, true );
-			isBreakTimerStarted = true;
+			setStorageValue(POMODORO_TIMER_STARTED_PROPERTY_STORAGE_KEY, false);
+			var breakLengthInMinutes = App.getApp().getProperty(
+			isLongBreak() ? "longBreakLength" : "shortBreakLength"
+			);
+			setEndTimeBySeconds(breakLengthInMinutes * 60);
+			setStorageValue(BREAK_TIMER_STARTED_PROPERTY_STORAGE_KEY, true);
+			timer.start( method( :breakCallback ), 10 * 1000, true );
 		}
 
 		Ui.requestUpdate();
 	}
 
 	function breakCallback() {
-		minutes -= 1;
-
-		if ( minutes == 0 ) {
+		var seconds = getSeconds();
+		if ( seconds <= 0 ) {
 			play( 7 ); // Attention.TONE_INTERVAL_ALERT
 			ping( 100, 1500 );
 			timer.stop();
-
-			isBreakTimerStarted = false;
-			pomodoroNumber += 1;
+			setStorageValue(BREAK_TIMER_STARTED_PROPERTY_STORAGE_KEY, false);
+			var pomodoroNumber = getStorageValue(POMODORO_NUMBER_PROPERTY_STORAGE_KEY, 1);
+			setStorageValue(POMODORO_NUMBER_PROPERTY_STORAGE_KEY, pomodoroNumber + 1);
+			setStorageValue(POMODORO_TIMER_STARTED_PROPERTY_STORAGE_KEY, true);
 			resetMinutes();
-			timer.start( method( :idleCallback ), 60 * 1000, true );
+			timer.start( method( :idleCallback ), 10 * 1000, true );
 		}
 
 		Ui.requestUpdate();
@@ -96,6 +114,8 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 	}
 
 	function onSelect() {
+		var isBreakTimerStarted = getStorageValue(BREAK_TIMER_STARTED_PROPERTY_STORAGE_KEY, false);
+		var isPomodoroTimerStarted = getStorageValue(POMODORO_TIMER_STARTED_PROPERTY_STORAGE_KEY, false);
 		if ( isBreakTimerStarted || isPomodoroTimerStarted ) {
 			Ui.pushView( new Rez.Menus.StopMenu(), new StopMenuDelegate(), Ui.SLIDE_UP );
 			return true;
@@ -105,12 +125,11 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 		ping( 75, 1500 );
 		timer.stop();
 		resetMinutes();
-		timer.start( method( :pomodoroCallback ), 60 * 1000, true );
+		timer.start( method( :pomodoroCallback ), 10 * 1000, true );
 		if ( me.shouldTick() ) {
 			tickTimer.start( method( :tickCallback ), App.getApp().getProperty( "tickFrequency" ) * 1000, true );
 		}
-		isPomodoroTimerStarted = true;
-
+		setStorageValue(POMODORO_TIMER_STARTED_PROPERTY_STORAGE_KEY, true);
 		Ui.requestUpdate();
 
 		return true;

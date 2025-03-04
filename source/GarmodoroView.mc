@@ -55,6 +55,9 @@ class GarmodoroView extends Ui.View {
 	function onUpdate( dc ) {
 		dc.setColor( Gfx.COLOR_TRANSPARENT, Gfx.COLOR_BLACK );
 		dc.clear();
+		var isBreakTimerStarted = getStorageValue(BREAK_TIMER_STARTED_PROPERTY_STORAGE_KEY, false);
+		var isPomodoroTimerStarted = getStorageValue(POMODORO_TIMER_STARTED_PROPERTY_STORAGE_KEY, false);
+		var pomodoroNumber = getStorageValue(POMODORO_NUMBER_PROPERTY_STORAGE_KEY, 1);
 		if ( isBreakTimerStarted ) {
 			dc.setColor( Gfx.COLOR_GREEN, Gfx.COLOR_TRANSPARENT );
 			dc.drawText( me.centerX, me.pomodoroOffset, Gfx.FONT_MEDIUM, isLongBreak() ? me.longBreakLabel : me.shortBreakLabel, Gfx.TEXT_JUSTIFY_CENTER );
@@ -82,6 +85,7 @@ class GarmodoroView extends Ui.View {
 	}
 
 	hidden function drawMinutes( dc ) {
+		var minutes = getMinutes();
 		dc.drawText( me.centerX, me.minutesOffset, Gfx.FONT_NUMBER_THAI_HOT, minutes.format( "%02d" ), Gfx.TEXT_JUSTIFY_CENTER );
 	}
 
