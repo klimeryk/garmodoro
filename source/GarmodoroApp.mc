@@ -1,23 +1,17 @@
 using Toybox.Application as App;
-using Toybox.Timer as Timer;
+using Toybox.System;
 
+(:background)
 class GarmodoroApp extends App.AppBase {
+  function initialize() {
+    AppBase.initialize();
+  }
 
-	function initialize() {
-		AppBase.initialize();
-	}
+  function getInitialView() {
+    return [new GarmodoroView(), new GarmodoroDelegate()];
+  }
 
-	function onStart(state) {
-		timer = new Timer.Timer();
-		tickTimer = new Timer.Timer();
-	}
-
-	function onStop(state) {
-		tickTimer.stop();
-		timer.stop();
-	}
-
-	function getInitialView() {
-		return [ new GarmodoroView(), new GarmodoroDelegate() ];
-	}
+  public function getServiceDelegate() as [System.ServiceDelegate] {
+    return [new GarmodoroServiceDelegate()];
+  }
 }
