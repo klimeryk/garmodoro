@@ -20,6 +20,7 @@ Pomodoro for Garmin devices using Connect IQ
 To run the project, you can either import the project into Eclipse the usual way. Or use the `Makefile`:
  * Edit `properties.mk` file and make sure the paths there are valid on your computer. Change the `DEVICE` variable if you want/need.
  * Run `make run` to build the project and run the Connect IQ simulator on the chosen `DEVICE`.
+ * Run `make update-devices` to update `manifest.xml` with new devices. If a device has been tested and is not possible to support it (rare, but happens), its entry will be commented out and will remain that way on subsequent runs.
 
 See https://github.com/danielsiwiec/garmin-connect-seed for the full list of supported targets and variables.
 

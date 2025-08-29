@@ -43,3 +43,6 @@ package:
 clean:
 	@rm -rf bin/*
 
+update-devices:
+	@./scripts/update_devices.sh manifest.xml $(SDK_HOME)/../../Devices/
+
