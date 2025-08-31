@@ -3,33 +3,34 @@ using Toybox.Graphics as Gfx;
 using Toybox.System as System;
 using Toybox.Time;
 using Toybox.Time.Gregorian;
-using Toybox.Lang;
+
+import Toybox.Lang;
 
 class GarmodoroView extends Ui.View {
-	hidden var pomodoroSubtitle;
-	hidden var shortBreakLabel;
-	hidden var longBreakLabel;
-	hidden var readyLabel;
+	hidden var pomodoroSubtitle as String;
+	hidden var shortBreakLabel as String;
+	hidden var longBreakLabel as String;
+	hidden var readyLabel as String;
 
-	hidden var centerX as Lang.Float = 0.0;
-	hidden var centerY as Lang.Float = 0.0;
+	hidden var centerX as Float = 0.0;
+	hidden var centerY as Float = 0.0;
 
-	hidden var pomodoroOffset as Lang.Float = 5.0;
-	hidden var captionOffset as Lang.Float = 0.0;
-	hidden var readyLabelOffset as Lang.Float = 0.0;
-	hidden var minutesOffset as Lang.Float = 0.0;
-	hidden var timeOffset as Lang.Float = 0.0;
+	hidden var pomodoroOffset as Float = 5.0;
+	hidden var captionOffset as Float = 0.0;
+	hidden var readyLabelOffset as Float = 0.0;
+	hidden var minutesOffset as Float = 0.0;
+	hidden var timeOffset as Float = 0.0;
 
 	function initialize() {
 		View.initialize();
+
+		pomodoroSubtitle = Ui.loadResource( Rez.Strings.PomodoroSubtitle ) as String;
+		shortBreakLabel = Ui.loadResource( Rez.Strings.ShortBreakLabel ) as String;
+		longBreakLabel = Ui.loadResource( Rez.Strings.LongBreakLabel ) as String;
+		readyLabel = Ui.loadResource( Rez.Strings.ReadyLabel ) as String;
 	}
 
 	function onLayout( dc ) {
-		pomodoroSubtitle = Ui.loadResource( Rez.Strings.PomodoroSubtitle );
-		shortBreakLabel = Ui.loadResource( Rez.Strings.ShortBreakLabel );
-		longBreakLabel = Ui.loadResource( Rez.Strings.LongBreakLabel );
-		readyLabel = Ui.loadResource( Rez.Strings.ReadyLabel );
-
 		var height = dc.getHeight();
 		centerX = dc.getWidth() / 2.0;
 		centerY = height / 2.0;
@@ -84,23 +85,23 @@ class GarmodoroView extends Ui.View {
 		dc.drawText( self.centerX, self.timeOffset, Gfx.FONT_NUMBER_MILD, self.getTime(), Gfx.TEXT_JUSTIFY_CENTER );
 	}
 
-	hidden function drawMinutes( dc ) {
+	hidden function drawMinutes( dc as Gfx.Dc ) as Void {
 		dc.drawText( me.centerX, me.minutesOffset, Gfx.FONT_NUMBER_THAI_HOT, me.formatAsDoubleDigit( minutes ), Gfx.TEXT_JUSTIFY_CENTER );
 	}
 
-	hidden function drawCaption( dc ) {
+	hidden function drawCaption( dc as Gfx.Dc ) as Void {
 		dc.drawText( me.centerX, me.captionOffset, Gfx.FONT_TINY, me.pomodoroSubtitle, Gfx.TEXT_JUSTIFY_CENTER );
 	}
 
 	function onHide() {
 	}
 
-	function getTime() {
+	function getTime() as String {
 		var today = Gregorian.info( Time.now(), Time.FORMAT_SHORT );
 		return me.formatAsDoubleDigit( today.hour ) + ":" + me.formatAsDoubleDigit( today.min );
 	}
 
-	function formatAsDoubleDigit(number as Lang.Number) as Lang.String {
+	function formatAsDoubleDigit(number as Number) as String {
 		if ( number >= 10 ) {
 			return number.toString();
 		}

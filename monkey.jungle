@@ -1,5 +1,5 @@
 project.manifest = manifest.xml
-project.typecheck = 1
+project.typecheck = 3
 project.optimization = 2
 
 base.excludeAnnotations = oldPropertiesApi
