@@ -25,7 +25,7 @@ buildall:
 
 run: build
 	@$(SDK_HOME)/bin/connectiq &&\
-	sleep 3 &&\
+	sleep 5 &&\
 	$(SDK_HOME)/bin/monkeydo bin/$(appName).prg $(DEVICE)
 
 deploy: build
