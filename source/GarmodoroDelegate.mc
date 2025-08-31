@@ -21,10 +21,6 @@ function play( tone ) {
 	}
 }
 
-function idleCallback() {
-	Ui.requestUpdate();
-}
-
 function isLongBreak() {
 	return ( pomodoroNumber % App.getApp().getProperty( "numberOfPomodorosBeforeLongBreak" ) ) == 0;
 }
@@ -34,6 +30,10 @@ function resetMinutes() {
 }
 
 class GarmodoroDelegate extends Ui.BehaviorDelegate {
+	function idleCallback() {
+		Ui.requestUpdate();
+	}
+
 	function initialize() {
 		Ui.BehaviorDelegate.initialize();
 		timer.start( method( :idleCallback ), 60 * 1000, true );

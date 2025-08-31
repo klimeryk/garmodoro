@@ -7,6 +7,10 @@ class StopMenuDelegate extends Ui.MenuInputDelegate {
 		MenuInputDelegate.initialize();
 	}
 
+	function idleCallback() {
+		Ui.requestUpdate();
+	}
+
 	function onMenuItem( item ) {
 		if ( item == :restart ) {
 			play( 9 ); // Attention.TONE_RESET
