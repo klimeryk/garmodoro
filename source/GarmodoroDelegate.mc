@@ -14,6 +14,8 @@ var pomodoroNumber as Number = 1;
 var isPomodoroTimerStarted as Boolean = false;
 var isBreakTimerStarted as Boolean = false;
 var needsClear as Boolean = true;
+var strongVibration as Attention.VibeProfile = new Attention.VibeProfile( 100, 1500);
+var softVibration as Attention.VibeProfile = new Attention.VibeProfile( 70, 1500 );
 
 (:newPropertiesApi)
 function getProperty(property as App.PropertyKeyType) as App.PropertyValueType {
@@ -25,9 +27,9 @@ function getProperty(property as App.PropertyKeyType) as App.PropertyValueType {
 	return App.getApp().getProperty( property );
 }
 
-function ping( dutyCycle as Number, length as Number ) as Void {
+function ping( vibeProfile as Attention.VibeProfile ) as Void {
 	if ( Attention has :vibrate ) {
-		Attention.vibrate( [ new Attention.VibeProfile( dutyCycle, length ) ] );
+		Attention.vibrate( [ vibeProfile ] );
 	}
 }
 
@@ -46,6 +48,8 @@ function resetMinutes() as Void {
 }
 
 class GarmodoroDelegate extends Ui.BehaviorDelegate {
+	hidden var tickVibration as Attention.VibeProfile = new Attention.VibeProfile( getProperty( "tickStrength" ) as Number, getProperty( "tickDuration" ) as Number );
+
 	function idleCallback() as Void {
 		Ui.requestUpdate();
 	}
@@ -60,7 +64,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 
 		if ( minutes == 0 ) {
 			play( Attention.TONE_LAP );
-			ping( 100, 1500 );
+			ping( strongVibration );
 			tickTimer.stop();
 			timer.stop();
 			isPomodoroTimerStarted = false;
@@ -79,7 +83,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 
 		if ( minutes == 0 ) {
 			play( Attention.TONE_INTERVAL_ALERT );
-			ping( 100, 1500 );
+			ping( strongVibration );
 			timer.stop();
 
 			needsClear = true;
@@ -97,7 +101,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 	}
 
 	function tickCallback() as Void {
-		ping( getProperty( "tickStrength" ) as Number, getProperty( "tickDuration" ) as Number );
+		ping( me.tickVibration );
 	}
 
 	function onBack() {
@@ -120,7 +124,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 		}
 
 		play( Attention.TONE_START );
-		ping( 75, 1500 );
+		ping( softVibration );
 		timer.stop();
 		resetMinutes();
 		timer.start( method( :pomodoroCallback ), MINUTE_IN_MILISECONDS, true );
