@@ -3,6 +3,8 @@ using Toybox.Attention as Attention;
 using Toybox.WatchUi as Ui;
 using Toybox.Lang as Lang;
 
+const MINUTE_IN_MILISECONDS = 60 * 1000;
+
 var timer;
 var tickTimer;
 var minutes = 0;
@@ -38,7 +40,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 
 	function initialize() {
 		Ui.BehaviorDelegate.initialize();
-		timer.start( method( :idleCallback ), 60 * 1000, true );
+		timer.start( method( :idleCallback ), MINUTE_IN_MILISECONDS, true );
 	}
 
 	function pomodoroCallback() {
@@ -52,7 +54,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 			isPomodoroTimerStarted = false;
 			minutes = App.getApp().getProperty( isLongBreak() ? "longBreakLength" : "shortBreakLength" );
 
-			timer.start( method( :breakCallback ), 60 * 1000, true );
+			timer.start( method( :breakCallback ), MINUTE_IN_MILISECONDS, true );
 			needsClear = true;
 			isBreakTimerStarted = true;
 		}
@@ -72,7 +74,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 			isBreakTimerStarted = false;
 			pomodoroNumber += 1;
 			resetMinutes();
-			timer.start( method( :idleCallback ), 60 * 1000, true );
+			timer.start( method( :idleCallback ), MINUTE_IN_MILISECONDS, true );
 		}
 
 		Ui.requestUpdate();
@@ -109,7 +111,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 		ping( 75, 1500 );
 		timer.stop();
 		resetMinutes();
-		timer.start( method( :pomodoroCallback ), 60 * 1000, true );
+		timer.start( method( :pomodoroCallback ), MINUTE_IN_MILISECONDS, true );
 		if ( me.shouldTick() ) {
 			tickTimer.start( method( :tickCallback ), App.getApp().getProperty( "tickFrequency" ) * 1000, true );
 		}

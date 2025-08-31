@@ -24,7 +24,7 @@ class StopMenuDelegate extends Ui.MenuInputDelegate {
 			isPomodoroTimerStarted = false;
 			isBreakTimerStarted = false;
 			needsClear = true;
-			timer.start( method( :idleCallback ), 60 * 1000, true );
+			timer.start( method( :idleCallback ), MINUTE_IN_MILISECONDS, true );
 
 			Ui.requestUpdate();
 		} else if ( item == :exit ) {
