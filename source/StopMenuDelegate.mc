@@ -23,6 +23,7 @@ class StopMenuDelegate extends Ui.MenuInputDelegate {
 			pomodoroNumber = 1;
 			isPomodoroTimerStarted = false;
 			isBreakTimerStarted = false;
+			needsClear = true;
 			timer.start( method( :idleCallback ), 60 * 1000, true );
 
 			Ui.requestUpdate();

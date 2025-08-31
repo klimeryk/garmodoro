@@ -1,13 +1,15 @@
 using Toybox.Application as App;
 using Toybox.Attention as Attention;
 using Toybox.WatchUi as Ui;
+using Toybox.Lang as Lang;
 
 var timer;
 var tickTimer;
 var minutes = 0;
 var pomodoroNumber = 1;
-var isPomodoroTimerStarted = false;
-var isBreakTimerStarted = false;
+var isPomodoroTimerStarted as Lang.Boolean = false;
+var isBreakTimerStarted as Lang.Boolean = false;
+var needsClear as Lang.Boolean = true;
 
 function ping( dutyCycle, length ) {
 	if ( Attention has :vibrate ) {
@@ -51,6 +53,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 			minutes = App.getApp().getProperty( isLongBreak() ? "longBreakLength" : "shortBreakLength" );
 
 			timer.start( method( :breakCallback ), 60 * 1000, true );
+			needsClear = true;
 			isBreakTimerStarted = true;
 		}
 
@@ -65,6 +68,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 			ping( 100, 1500 );
 			timer.stop();
 
+			needsClear = true;
 			isBreakTimerStarted = false;
 			pomodoroNumber += 1;
 			resetMinutes();
@@ -110,6 +114,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 			tickTimer.start( method( :tickCallback ), App.getApp().getProperty( "tickFrequency" ) * 1000, true );
 		}
 		isPomodoroTimerStarted = true;
+		needsClear = true;
 
 		Ui.requestUpdate();
 
