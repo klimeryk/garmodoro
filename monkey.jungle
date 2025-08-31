@@ -1,3 +1,16 @@
 project.manifest = manifest.xml
 project.typecheck = 1
 project.optimization = 2
+
+base.excludeAnnotations = oldPropertiesApi
+
+d2bravo.excludeAnnotations = newPropertiesApi
+d2bravo_titanium.excludeAnnotations = newPropertiesApi
+epix.excludeAnnotations = newPropertiesApi
+fenix3.excludeAnnotations = newPropertiesApi
+fenix3_hr.excludeAnnotations = newPropertiesApi
+fr230.excludeAnnotations = newPropertiesApi
+fr235.excludeAnnotations = newPropertiesApi
+fr630.excludeAnnotations = newPropertiesApi
+fr920xt.excludeAnnotations = newPropertiesApi
+vivoactive.excludeAnnotations = newPropertiesApi

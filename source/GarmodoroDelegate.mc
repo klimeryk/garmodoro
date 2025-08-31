@@ -13,6 +13,16 @@ var isPomodoroTimerStarted as Lang.Boolean = false;
 var isBreakTimerStarted as Lang.Boolean = false;
 var needsClear as Lang.Boolean = true;
 
+(:newPropertiesApi)
+function getProperty(property as App.PropertyKeyType) as App.PropertyValueType {
+	return App.Properties.getValue( property );
+}
+
+(:oldPropertiesApi)
+function getProperty(property as App.PropertyKeyType) as App.PropertyValueType {
+	return App.getApp().getProperty( property );
+}
+
 function ping( dutyCycle, length ) {
 	if ( Attention has :vibrate ) {
 		Attention.vibrate( [ new Attention.VibeProfile( dutyCycle, length ) ] );
@@ -20,17 +30,17 @@ function ping( dutyCycle, length ) {
 }
 
 function play( tone ) {
-	if ( Attention has :playTone && ! App.getApp().getProperty( "muteSounds" ) ) {
+	if ( Attention has :playTone && ! getProperty( "muteSounds" ) ) {
 		Attention.playTone( tone );
 	}
 }
 
 function isLongBreak() {
-	return ( pomodoroNumber % App.getApp().getProperty( "numberOfPomodorosBeforeLongBreak" ) ) == 0;
+	return ( pomodoroNumber % getProperty( "numberOfPomodorosBeforeLongBreak" ) ) == 0;
 }
 
 function resetMinutes() {
-	minutes = App.getApp().getProperty( "pomodoroLength" );
+	minutes = getProperty( "pomodoroLength" );
 }
 
 class GarmodoroDelegate extends Ui.BehaviorDelegate {
@@ -52,7 +62,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 			tickTimer.stop();
 			timer.stop();
 			isPomodoroTimerStarted = false;
-			minutes = App.getApp().getProperty( isLongBreak() ? "longBreakLength" : "shortBreakLength" );
+			minutes = getProperty( isLongBreak() ? "longBreakLength" : "shortBreakLength" );
 
 			timer.start( method( :breakCallback ), MINUTE_IN_MILISECONDS, true );
 			needsClear = true;
@@ -81,11 +91,11 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 	}
 
 	function shouldTick() {
-		return App.getApp().getProperty( "tickStrength" ) > 0;
+		return getProperty( "tickStrength" ) > 0;
 	}
 
 	function tickCallback() {
-		ping( App.getApp().getProperty( "tickStrength" ), App.getApp().getProperty( "tickDuration" ) );
+		ping( getProperty( "tickStrength" ), getProperty( "tickDuration" ) );
 	}
 
 	function onBack() {
@@ -113,7 +123,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 		resetMinutes();
 		timer.start( method( :pomodoroCallback ), MINUTE_IN_MILISECONDS, true );
 		if ( me.shouldTick() ) {
-			tickTimer.start( method( :tickCallback ), App.getApp().getProperty( "tickFrequency" ) * 1000, true );
+			tickTimer.start( method( :tickCallback ), getProperty( "tickFrequency" ) * 1000, true );
 		}
 		isPomodoroTimerStarted = true;
 		needsClear = true;
