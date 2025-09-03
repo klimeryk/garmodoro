@@ -8,7 +8,7 @@ class StopMenuDelegate extends Ui.MenuInputDelegate {
 	}
 
 	function idleCallback() as Void {
-		Ui.requestUpdate();
+		requestViewUpdate( false );
 	}
 
 	function onMenuItem( item ) {
@@ -23,10 +23,9 @@ class StopMenuDelegate extends Ui.MenuInputDelegate {
 			pomodoroNumber = 1;
 			isPomodoroTimerStarted = false;
 			isBreakTimerStarted = false;
-			needsClear = true;
 			timer.start( method( :idleCallback ), MINUTE_IN_MILISECONDS, true );
 
-			Ui.requestUpdate();
+			requestViewUpdate( true );
 		} else if ( item == :exit ) {
 			System.exit();
 		}

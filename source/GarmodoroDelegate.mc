@@ -39,6 +39,11 @@ function play( tone as Attention.Tone ) as Void {
 	}
 }
 
+function requestViewUpdate( withClear as Boolean ) as Void {
+	needsClear = withClear;
+	Ui.requestUpdate();
+}
+
 function isLongBreak() as Boolean {
 	return ( pomodoroNumber % getProperty( "numberOfPomodorosBeforeLongBreak" ) as Number ) == 0;
 }
@@ -51,7 +56,7 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 	hidden var tickVibration as Attention.VibeProfile = new Attention.VibeProfile( getProperty( "tickStrength" ) as Number, getProperty( "tickDuration" ) as Number );
 
 	function idleCallback() as Void {
-		Ui.requestUpdate();
+		requestViewUpdate( false );
 	}
 
 	function initialize() {
@@ -71,11 +76,10 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 			minutes = getProperty( isLongBreak() ? "longBreakLength" : "shortBreakLength" ) as Number;
 
 			timer.start( method( :breakCallback ), MINUTE_IN_MILISECONDS, true );
-			needsClear = true;
 			isBreakTimerStarted = true;
 		}
 
-		Ui.requestUpdate();
+		requestViewUpdate( isBreakTimerStarted );
 	}
 
 	function breakCallback() as Void {
@@ -86,14 +90,13 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 			ping( strongVibration );
 			timer.stop();
 
-			needsClear = true;
 			isBreakTimerStarted = false;
 			pomodoroNumber += 1;
 			resetMinutes();
 			timer.start( method( :idleCallback ), MINUTE_IN_MILISECONDS, true );
 		}
 
-		Ui.requestUpdate();
+		requestViewUpdate( ! isBreakTimerStarted );
 	}
 
 	function shouldTick() as Boolean {
@@ -132,9 +135,8 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 			tickTimer.start( method( :tickCallback ), getProperty( "tickFrequency" ) as Number * 1000, true );
 		}
 		isPomodoroTimerStarted = true;
-		needsClear = true;
 
-		Ui.requestUpdate();
+		requestViewUpdate( true );
 
 		return true;
 	}

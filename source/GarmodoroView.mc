@@ -56,8 +56,9 @@ class GarmodoroView extends Ui.View {
 		if ( needsClear ) {
 			dc.setColor( Gfx.COLOR_BLACK, Gfx.COLOR_BLACK );
 			dc.clear();
-			needsClear = false;
 		}
+
+		needsClear = true;
 
 		if ( isBreakTimerStarted ) {
 			dc.setColor( Gfx.COLOR_GREEN, Gfx.COLOR_BLACK );
