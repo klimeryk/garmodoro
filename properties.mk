@@ -1,4 +1,4 @@
-DEVICE = venu2s
+DEVICE = fenix6pro
 SDK_HOME = /Users/klimeryk/work/tools/connectiq-sdk-mac
 DEPLOY = /Volumes/GARMIN/GARMIN/APPS/
 PRIVATE_KEY = /Users/klimeryk/work/tools/connectiq/developer_key.der
