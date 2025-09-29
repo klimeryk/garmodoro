@@ -1,13 +1,14 @@
 <strings>
-    <string id="AppName">Pomodoro</string>
-    <string id="PomodoroLength">The length of one Pomodoro (in minutes)</string>
-    <string id="ShortBreakLength">The length of a short break between Pomodoros</string>
-    <string id="LongBreakLength">The length of the long break after a group of Pomodoros</string>
-    <string id="NumberOfPomodorosBeforeLongBreak">The number of Pomodoros in a group</string>
+	<string id="AppName">Pomodoro</string>
+	<string id="PomodoroLength">The length of one Pomodoro (in minutes)</string>
+	<string id="ShortBreakLength">The length of a short break between Pomodoros</string>
+	<string id="LongBreakLength">The length of the long break after a group of Pomodoros</string>
+	<string id="NumberOfPomodorosBeforeLongBreak">The number of Pomodoros in a group</string>
 	<string id="TickStrength">Strength of the vibration on every tick (0 means disabled)</string>
 	<string id="TickDuration">Duration of the vibration on every tick</string>
 	<string id="TickFrequency">Frequency of the tick vibration (in seconds)</string>
 	<string id="MuteSounds">Mute sounds</string>
+	<string id="OptimizeRendering">Uses less battery, but can introduce graphic glitches on some devices. If it works for you, please let me know!</string>
 
 	<string id="PomodoroSubtitle">minutes left</string>
 	<string id="ShortBreakLabel">Short break!</string>

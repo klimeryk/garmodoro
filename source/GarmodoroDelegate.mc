@@ -40,7 +40,7 @@ function play( tone as Attention.Tone ) as Void {
 }
 
 function requestViewUpdate( withClear as Boolean ) as Void {
-	needsClear = withClear;
+	needsClear = withClear || ! ( getProperty( "optimizeRendering" ) as Boolean );
 	Ui.requestUpdate();
 }
 

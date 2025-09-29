@@ -8,6 +8,7 @@
 	<string id="TickDuration">Duración de la vibración en cada segundo</string>
 	<string id="TickFrequency">Frecuencia de la vibración en cada segundo</string>
 	<string id="MuteSounds">Sonidos de silencio</string>
+	<string id="OptimizeRendering">Usa menos batería, pero puede causar errores gráficos en algunos dispositivos. Si te funciona, ¡házmelo saber!</string>
 
 	<string id="PomodoroSubtitle">minutos restantes</string>
 	<string id="ShortBreakLabel">Descanso corto!</string>

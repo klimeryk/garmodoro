@@ -7,4 +7,5 @@
 	<property id="tickDuration" type="number">80</property>
 	<property id="tickFrequency" type="number">1</property>
 	<property id="muteSounds" type="boolean">false</property>
+	<property id="optimizeRendering" type="boolean">false</property>
 </properties>

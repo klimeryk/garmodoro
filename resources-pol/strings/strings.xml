@@ -1,13 +1,14 @@
 <strings>
-    <string id="AppName">Pomodoro</string>
-    <string id="PomodoroLength">Czas trwania jednego Pomodoro (w minutach)</string>
-    <string id="ShortBreakLength">Czas trwania krótkiej przerwy pomiędzy Pomodoro</string>
-    <string id="LongBreakLength">Czas trwania długiej przerwy pomiędzy grupą Pomodoro</string>
-    <string id="NumberOfPomodorosBeforeLongBreak">Liczba Pomodoro w grupie</string>
+	<string id="AppName">Pomodoro</string>
+	<string id="PomodoroLength">Czas trwania jednego Pomodoro (w minutach)</string>
+	<string id="ShortBreakLength">Czas trwania krótkiej przerwy pomiędzy Pomodoro</string>
+	<string id="LongBreakLength">Czas trwania długiej przerwy pomiędzy grupą Pomodoro</string>
+	<string id="NumberOfPomodorosBeforeLongBreak">Liczba Pomodoro w grupie</string>
 	<string id="TickStrength">Siła wibracji co tyknięcie</string>
 	<string id="TickDuration">Długość wibracji co tyknięcie</string>
 	<string id="TickFrequency">Częstotliwość tykania używając wibracji (w sekundach)</string>
 	<string id="MuteSounds">Wycisz dźwięki</string>
+	<string id="OptimizeRendering">Zużywa mniej baterii, ale może powodować błędy graficzne na niektórych urządzeniach. Jeśli u Ciebie działa, daj mi znać!</string>
 
 	<string id="PomodoroSubtitle">minut pozostało</string>
 	<string id="ShortBreakLabel">Krótka przerwa!</string>

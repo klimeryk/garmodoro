@@ -23,4 +23,7 @@
 	<setting propertyKey="@Properties.muteSounds" title="@Strings.MuteSounds">
 		<settingConfig type="boolean" />
 	</setting>
+	<setting propertyKey="@Properties.optimizeRendering" title="@Strings.OptimizeRendering">
+		<settingConfig type="boolean" />
+	</setting>
 </settings>
