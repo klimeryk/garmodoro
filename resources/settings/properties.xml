@@ -8,4 +8,39 @@
 	<property id="tickFrequency" type="number">1</property>
 	<property id="muteSounds" type="boolean">false</property>
 	<property id="optimizeRendering" type="boolean">false</property>
+
+	<!-- SLOT 1: State -->
+	<property id="task1_enabled" type="boolean">true</property>
+	<property id="task1_name" type="string">State</property>
+	<property id="task1_sport" type="number">0</property>
+	<property id="task1_subsport" type="number">43</property>
+
+	<!-- SLOT 2: Comfort -->
+	<property id="task2_enabled" type="boolean">true</property>
+	<property id="task2_name" type="string">Comfort</property>
+	<property id="task2_sport" type="number">10</property>
+	<property id="task2_subsport" type="number">26</property>
+
+	<!-- SLOT 3: Care -->
+	<property id="task3_enabled" type="boolean">true</property>
+	<property id="task3_name" type="string">Care</property>
+	<property id="task3_sport" type="number">0</property>
+	<property id="task3_subsport" type="number">48</property>
+
+	<!-- SLOT 4: Work -->
+	<property id="task4_enabled" type="boolean">true</property>
+	<property id="task4_name" type="string">Work</property>
+	<property id="task4_sport" type="number">0</property>
+	<property id="task4_subsport" type="number">39</property>
+
+	<!-- SLOT 5: Growth -->
+	<property id="task5_enabled" type="boolean">true</property>
+	<property id="task5_name" type="string">Growth</property>
+	<property id="task5_sport" type="number">4</property>
+	<property id="task5_subsport" type="number">0</property>
+
+	<!-- Current task (runtime storage) -->
+	<property id="current_task_name" type="string">Work</property>
+	<property id="current_sport" type="number">0</property>
+	<property id="current_subsport" type="number">39</property>
 </properties>

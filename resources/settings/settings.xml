@@ -26,4 +26,59 @@
 	<setting propertyKey="@Properties.optimizeRendering" title="@Strings.OptimizeRendering">
 		<settingConfig type="boolean" />
 	</setting>
+
+	<!-- Task Slot 1 Configuration -->
+	<setting propertyKey="@Properties.task1_enabled" title="Slot 1: Enabled">
+		<settingConfig type="boolean" />
+	</setting>
+	<setting propertyKey="@Properties.task1_name" title="Slot 1: Name">
+		<settingConfig type="alphaNumeric" />
+	</setting>
+	<setting propertyKey="@Properties.task1_subsport" title="Slot 1: Activity Code">
+		<settingConfig type="numeric" min="0" max="100" />
+	</setting>
+
+	<!-- Task Slot 2 Configuration -->
+	<setting propertyKey="@Properties.task2_enabled" title="Slot 2: Enabled">
+		<settingConfig type="boolean" />
+	</setting>
+	<setting propertyKey="@Properties.task2_name" title="Slot 2: Name">
+		<settingConfig type="alphaNumeric" />
+	</setting>
+	<setting propertyKey="@Properties.task2_subsport" title="Slot 2: Activity Code">
+		<settingConfig type="numeric" min="0" max="100" />
+	</setting>
+
+	<!-- Task Slot 3 Configuration -->
+	<setting propertyKey="@Properties.task3_enabled" title="Slot 3: Enabled">
+		<settingConfig type="boolean" />
+	</setting>
+	<setting propertyKey="@Properties.task3_name" title="Slot 3: Name">
+		<settingConfig type="alphaNumeric" />
+	</setting>
+	<setting propertyKey="@Properties.task3_subsport" title="Slot 3: Activity Code">
+		<settingConfig type="numeric" min="0" max="100" />
+	</setting>
+
+	<!-- Task Slot 4 Configuration -->
+	<setting propertyKey="@Properties.task4_enabled" title="Slot 4: Enabled">
+		<settingConfig type="boolean" />
+	</setting>
+	<setting propertyKey="@Properties.task4_name" title="Slot 4: Name">
+		<settingConfig type="alphaNumeric" />
+	</setting>
+	<setting propertyKey="@Properties.task4_subsport" title="Slot 4: Activity Code">
+		<settingConfig type="numeric" min="0" max="100" />
+	</setting>
+
+	<!-- Task Slot 5 Configuration -->
+	<setting propertyKey="@Properties.task5_enabled" title="Slot 5: Enabled">
+		<settingConfig type="boolean" />
+	</setting>
+	<setting propertyKey="@Properties.task5_name" title="Slot 5: Name">
+		<settingConfig type="alphaNumeric" />
+	</setting>
+	<setting propertyKey="@Properties.task5_subsport" title="Slot 5: Activity Code">
+		<settingConfig type="numeric" min="0" max="100" />
+	</setting>
 </settings>

@@ -2,6 +2,8 @@ using Toybox.Application as App;
 using Toybox.Attention as Attention;
 using Toybox.WatchUi as Ui;
 using Toybox.Timer as Timer;
+using Toybox.ActivityRecording as ActivityRecording;
+using Toybox.Position;
 
 import Toybox.Lang;
 
@@ -16,6 +18,7 @@ var isBreakTimerStarted as Boolean = false;
 var needsClear as Boolean = true;
 var strongVibration as Attention.VibeProfile = new Attention.VibeProfile( 100, 1500);
 var softVibration as Attention.VibeProfile = new Attention.VibeProfile( 70, 1500 );
+var session as ActivityRecording.Session?;
 
 (:newPropertiesApi)
 function getProperty(property as App.PropertyKeyType) as App.PropertyValueType {
@@ -73,6 +76,10 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 			tickTimer.stop();
 			timer.stop();
 			isPomodoroTimerStarted = false;
+
+			// Stop and save activity session
+			stopActivitySession();
+
 			minutes = getProperty( isLongBreak() ? "longBreakLength" : "shortBreakLength" ) as Number;
 
 			timer.start( method( :breakCallback ), MINUTE_IN_MILISECONDS, true );
@@ -126,10 +133,28 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 			return true;
 		}
 
+		// Show task selection menu
+		showTaskSelectionMenu();
+		return true;
+	}
+
+	// Show menu for task selection
+	function showTaskSelectionMenu() as Void {
+		var menu = TaskMenuBuilder.buildMenu();
+		var delegate = new TaskMenuDelegate(method(:startTimerAfterSelection));
+		Ui.pushView(menu, delegate, Ui.SLIDE_UP);
+	}
+
+	// Callback after task selection
+	function startTimerAfterSelection() as Void {
 		play( Attention.TONE_START );
 		ping( softVibration );
 		timer.stop();
 		resetMinutes();
+
+		// Start activity recording session
+		startActivitySession();
+
 		timer.start( method( :pomodoroCallback ), MINUTE_IN_MILISECONDS, true );
 		if ( me.shouldTick() ) {
 			tickTimer.start( method( :tickCallback ), getProperty( "tickFrequency" ) as Number * 1000, true );
@@ -137,7 +162,62 @@ class GarmodoroDelegate extends Ui.BehaviorDelegate {
 		isPomodoroTimerStarted = true;
 
 		requestViewUpdate( true );
+	}
 
-		return true;
+	// Start activity recording session
+	function startActivitySession() as Void {
+		if (session != null) {
+			try {
+				session.stop();
+				session.save();
+			} catch (e) {
+				// Ignore errors from previous session
+			}
+			session = null;
+		}
+
+		var sport = App.Properties.getValue("current_sport");
+		var subsport = App.Properties.getValue("current_subsport");
+		var taskName = App.Properties.getValue("current_task_name");
+
+		// Protection from null
+		if (sport == null) { sport = 0; }
+		if (subsport == null) { subsport = 0; }
+		if (taskName == null) { taskName = "Pomodoro"; }
+
+		// Disable GPS to save battery
+		if (Toybox has :Position) {
+			Position.enableLocationEvents(Position.LOCATION_DISABLE, null);
+		}
+
+		try {
+			session = ActivityRecording.createSession({
+				:name => taskName,
+				:sport => sport,
+				:subSport => subsport
+			});
+
+			session.start();
+
+			System.println("Activity session started: " + taskName +
+			               " (sport=" + sport + ", subsport=" + subsport + ")");
+		} catch (e) {
+			System.println("Failed to start activity session: " + e);
+			session = null;
+		}
+	}
+
+	// Stop and save activity recording session
+	function stopActivitySession() as Void {
+		if (session != null) {
+			try {
+				session.stop();
+				session.save();
+				System.println("Activity session saved");
+			} catch (e) {
+				System.println("Failed to save activity session: " + e);
+			}
+			session = null;
+		}
 	}
 }

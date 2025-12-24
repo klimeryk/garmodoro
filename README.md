@@ -7,13 +7,40 @@ Pomodoro for Garmin devices using Connect IQ
 * Keeps track of time left in your Pomodoro session, as well as break time and overal number of Pomodoros.
 * **Mimics the ticking of a real physical Pomodoro** by using short vibrations.
 * Alerts you using vibrations and tones.
-* **Supports all Garmin devices** using Connect IQ.
+* **Supports all Garmin devices** using Connect IQ (API level 3.2.0+).
 * You can customize many aspects of the technique:
    * length of one Pomodoro (default: 25 minutes)
    * length of the short break between Pomodoros (default: 5 minutes)
    * length of the long break between groups of Pomodoros (default: 30 minutes)
    * the number of Pomodoros in a group (default: 4)
    * the strength and duration of the vibration "tick" (set either to `0` to disable)
+
+## 🎯 Custom Task Types (Modified Version)
+
+This fork adds support for custom task categorization with automatic activity recording to Garmin Connect:
+
+### Available Tasks:
+- **State** - Mindfulness/meditation sessions (Activity: Yoga)
+- **Comfort** - Rest and recovery (Activity: Cardio Training)
+- **Care** - Personal care activities (Activity: Commuting)
+- **Work** - Productive work sessions (Activity: eSports)
+- **Growth** - Learning and development (Activity: Strength Training)
+
+### How It Works:
+1. When you start a Pomodoro, you'll be prompted to select a task type from the menu
+2. Each Pomodoro session is recorded as a Garmin activity with the corresponding activity type
+3. Activities are automatically synced to Garmin Connect when your device connects
+4. **GPS is disabled** during sessions to save battery
+
+### Customization:
+Task names and activity types can be changed via Garmin Connect Mobile app settings.
+See [CUSTOMIZATION_GUIDE.md](CUSTOMIZATION_GUIDE.md) for detailed instructions.
+
+### Integration with Calendar:
+Activities are automatically synced to external calendars via:
+**Garmin Connect → Google Calendar → Samsung Calendar**
+
+This requires setting up a [Make.com](https://make.com) scenario or similar automation to connect Garmin Connect to your calendar service.
 
 ## Development
 
