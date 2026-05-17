@@ -14,7 +14,7 @@ class StopMenuDelegate extends Ui.MenuInputDelegate {
 	function onMenuItem( item ) {
 		if ( item == :restart ) {
 			play( Attention.TONE_RESET );
-			ping( softVibration );
+			ping( :soft );
 
 			tickTimer.stop();
 			timer.stop();
