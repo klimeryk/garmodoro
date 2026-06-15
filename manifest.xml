@@ -86,6 +86,8 @@
             <iq:product id="fenixe" />
             <iq:product id="fr165" />
             <iq:product id="fr165m" />
+            <iq:product id="fr170" />
+            <iq:product id="fr170m" />
             <iq:product id="fr230" />
             <iq:product id="fr235" />
             <iq:product id="fr245" />
@@ -103,6 +105,7 @@
             <iq:product id="fr630" />
             <iq:product id="fr645" />
             <iq:product id="fr645m" />
+            <iq:product id="fr70" />
             <iq:product id="fr735xt" />
             <iq:product id="fr745" />
             <iq:product id="fr920xt" />
